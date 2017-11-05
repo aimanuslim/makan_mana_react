@@ -1,0 +1,3 @@
+rootProject.name = 'makan_mana_react'
+
+include ':app'
