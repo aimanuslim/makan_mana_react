@@ -1,18 +1,42 @@
 import React, { Component } from 'react';
-import  { View } from 'react-native';
-import { Input, Card, CardSection, Button } from './common';
+import  { View, TouchableOpacity, Text} from 'react-native';
+import { connect } from 'react-redux';
+import { Input, Card, CardSection, Button } from './common/index';
 import AreaList from './AreaList';
+import Autocomplete  from 'react-native-autocomplete-input';
+import { findAutoComplete } from '../actions'
 
 class RandomAreaSuggest extends Component {
+	state = { autoCompleteQuery: '' }
+
+	onQueryChange(text) {
+		this.props.findAutoComplete(text)
+	}
+
 	render () {
+
 			return (
+
 				<View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
 					<Card>
 						<CardSection>
-							<Input
-								label="Area"
-								placeholder="E.g Palestine"
+
+							<Autocomplete
+								data={this.props.autoCompleteList}
+								defaultValue={this.state.autoCompleteQuery}
+							    onChangeText={(text) => {
+							    	console.log("Before call" + text)
+							    	this.props.findAutoComplete({ query: text })
+							    	this.setState({autoCompleteQuery: text})
+							    }
+							    }
+							    renderItem={item => (
+							      <TouchableOpacity onPress={() => this.setState({ autoCompleteQuery: item })}>
+							        <Text>{item}</Text>
+							      </TouchableOpacity>
+							      )}
 							/>
+
 						</CardSection>
 						<CardSection>
 							<Button>
@@ -30,8 +54,15 @@ class RandomAreaSuggest extends Component {
 
 					</Card>
 				</View>
+
+				
 				)
 	}
 }
 
-export default RandomAreaSuggest;
+const mapStateToProps = ({ googleAPI }) => {
+	const { autoCompleteList, autoCompLoading } = googleAPI
+	return { autoCompleteList, autoCompLoading }
+}
+
+export default connect(mapStateToProps, {findAutoComplete})(RandomAreaSuggest);

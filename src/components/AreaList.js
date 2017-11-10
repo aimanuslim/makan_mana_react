@@ -21,4 +21,4 @@ class AreaList extends Component {
 	};
 };
 
-export default AreaList
+export default AreaList;
