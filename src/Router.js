@@ -1,7 +1,7 @@
 import React from 'react';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Scene, Router } from 'react-native-router-flux';
 import SelectMode from './components/SelectMode';
-import RandomAreaSuggest from './components/RandomAreaSuggest'
+import RandomAreaSuggest from './components/RandomAreaSuggest';
 
 
 const RouterComponent = () => {
@@ -13,14 +13,13 @@ const RouterComponent = () => {
 					component={SelectMode}
 					title="Makan Mana?"
 					initial
-					>
-				</Scene>
+				/>
+
 				<Scene 
 					key="enterArea"
 					component={RandomAreaSuggest}
 
-					>
-				</Scene>
+				/>
 			</Scene>
 		</Router>
 

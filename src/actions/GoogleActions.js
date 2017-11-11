@@ -3,17 +3,18 @@ import fetch from 'cross-fetch';
 import _ from 'lodash';
 import { 
 	FIND_AUTOCOMPLETE,
-	FOUND_AUTOCOMPLETE
-} from './types'
+	FOUND_AUTOCOMPLETE,
+	SELECTION_DONE
+} from './types';
 import { KEY } from '../key'
 
 
 export const findAutoComplete = ({query}) => {
 	return (dispatch) => {
-		dispatch({type: FIND_AUTOCOMPLETE})
-		console.log("Query is " + query)
-		console.log("Url is " + `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${KEY}&types=geocode&offset=3`)
-		fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${KEY}&types=geocode&offset=3`, 
+		dispatch({ type: FIND_AUTOCOMPLETE });
+		console.log('Query is ' + query);
+		console.log('Url is ' + `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${KEY}`);
+		fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${KEY}`, 
 	
 			{
 			      method: 'get',
@@ -43,5 +44,11 @@ export const findAutoComplete = ({query}) => {
 			)
 	}
 
-}
+};
+
+export const clearAutoComplete = () => {
+	return {
+		type: SELECTION_DONE
+	};
+};
 
