@@ -4,51 +4,99 @@ import _ from 'lodash';
 import { 
 	FIND_AUTOCOMPLETE,
 	FOUND_AUTOCOMPLETE,
-	SELECTION_DONE
+	SET_QUERY, 
+	CLEAR_AUTOCOMPLETE,
+	AREA_DETECTED,
+	DETECTION_ERROR
+
 } from './types';
-import { KEY } from '../key'
+import { KEY } from '../key';
 
 
-export const findAutoComplete = ({query}) => {
+export const findAutoComplete = ({ query }) => {
 	return (dispatch) => {
 		dispatch({ type: FIND_AUTOCOMPLETE });
-		console.log('Query is ' + query);
-		console.log('Url is ' + `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${KEY}`);
 		fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${KEY}`, 
 	
 			{
-			      method: 'get',
-			      dataType: 'json',
-			      headers: {
-			        'Accept': 'application/json',
-			        'Content-Type': 'application/json'
-			      }
-			  }
+		      method: 'get',
+		      dataType: 'json',
+		      headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json'
+		      }
+		  }
 			).
 		then(
 
 			response => {
-				const json_data = response.json()
+				const json_data = response.json();
 				// console.log(response)
 				// console.log(json)
 
 				json_data.then((data) => {
-				        console.log(data);
-				        console.log(_.map(data.predictions, 'description'))
-				        dispatch({type: FOUND_AUTOCOMPLETE, payload: _.map(data.predictions, 'description')})
-				      });
-				
-			}).
-		catch(
-			() => { console.log("Error finding autocomplete suggestions")}
-			)
-	}
+					console.log(data);
+					console.log(_.map(data.predictions, 'description'));
+					dispatch({ type: FOUND_AUTOCOMPLETE, payload: _.map(data.predictions, 'description') });
+				});
+			})
+		.catch(
+			() => { console.log('Error finding autocomplete suggestion'); }
+			);
+	};
 
 };
+
+
+export const setCurrentQuery = ({query}) => {
+	return {
+		type: SET_QUERY,
+		payload: query
+	}
+}
 
 export const clearAutoComplete = () => {
 	return {
-		type: SELECTION_DONE
+		type: CLEAR_AUTOCOMPLETE
 	};
 };
 
+export const findNearbyAreas = (areaName) => {
+	return (dispatch) => {
+		
+	};
+};
+
+export const findVicinityFromGPS = () => {
+	return (dispatch) => {
+		try{
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${position.coords.latitude},${position.coords.longitude}&radius=20&key=${KEY}`)
+				.then(
+
+					response => {
+						const json_data = response.json();
+						json_data.then(data => {
+							console.log(data)
+							dispatch(
+							{
+								type: AREA_DETECTED,
+								payload: { query: data.results[0].vicinity }
+							})
+						}
+						)
+					}
+					)
+			},
+				(error) => {
+					dispatch({ type: DETECTION_ERROR });
+					console.log(error);
+				},
+				{ enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
+			);
+		} catch (error) {
+			console.log(error)
+		}
+	};
+};

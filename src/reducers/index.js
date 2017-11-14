@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import DummyReducer from './DummyReducer';
-import GoogleAPIReducer from './GoogleAPIReducer'
+import GoogleAPIReducer from './GoogleAPIReducer';
 
-export default combineReducers ({
+export default combineReducers({
 	dummy: DummyReducer,
 	googleAPI: GoogleAPIReducer
-})
+});
