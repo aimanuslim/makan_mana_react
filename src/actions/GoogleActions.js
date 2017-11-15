@@ -67,13 +67,14 @@ export const findNearbyAreas = (areaName) => {
 		dispatch({
 			type: FIND_NEARBY_AREAS
 		})
+		console.warn("query " + areaName)
 		fetch(`'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${areaName}&key=${KEY}`)
 		.then(
 			whichPlaceResponse => {
 				const json_data = whichPlaceResponse.json();
 				json_data.then(whichPlaceData => {
 					const location = whichPlaceData.results[0].geometry.location;
-					fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=500&key=${KEY}`)
+					fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=500&type=restaurant&key=${KEY}`)
 					.then(
 						suggestionsListResponse => { 
 							const json_data = suggestionsListResponse.json();
@@ -102,13 +103,12 @@ export const findVicinityFromGPS = () => {
 		try{
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${position.coords.latitude},${position.coords.longitude}&radius=20&key=${KEY}`)
+				fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${position.coords.latitude},${position.coords.longitude}&radius=500&type=restaurant&key=${KEY}`)
 				.then(
 
 					response => {
 						const json_data = response.json();
 						json_data.then(data => {
-							// console.log(data)
 							dispatch(
 							{
 								type: SET_QUERY,

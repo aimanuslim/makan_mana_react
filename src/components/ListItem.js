@@ -6,7 +6,7 @@ import { CardSection} from './common'
 class ListItem extends Component {
 	render () {
 
-		const { name } = this.props.place;
+		const { name } = this.props.place.item;
 		return (
 			<TouchableWithoutFeedback>
 			  <View>

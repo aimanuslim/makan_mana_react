@@ -1,5 +1,5 @@
 import React, { Component, PermissionsAndroid } from 'react';
-import { View, TouchableOpacity, Text, Keyboard } from 'react-native';
+import { View, TouchableOpacity, Text, Keyboard, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -7,7 +7,7 @@ import Permissions from 'react-native-permissions';
 
 import { Card, CardSection, Button, Spinner } from './common/index';
 import AreaList from './AreaList';
-import { findAutoComplete, clearAutoComplete, setCurrentQuery, findVicinityFromGPS } from '../actions';
+import { findAutoComplete, clearAutoComplete, setCurrentQuery, findVicinityFromGPS, findNearbyAreas } from '../actions';
 
 class RandomAreaSuggest extends Component {
 	state = { autoCompleteQuery: '', 
@@ -20,12 +20,13 @@ class RandomAreaSuggest extends Component {
 			});
 	}
 
-	onSuggestionSelect = (item) => {
+	onAutoCompleteSelect = (item) => {
 		this.setState({ 
 		showSuggestions: false
 		});
 		this.props.clearAutoComplete();
 		this.props.setCurrentQuery({ query: item });
+		this.props.findNearbyAreas(item);
 		Keyboard.dismiss();
 	}
 
@@ -41,61 +42,61 @@ class RandomAreaSuggest extends Component {
 
 	renderAreaList() {
 		if (this.props.findingSuggestion) {
-			console.log('returning spinner')
 			return (<Spinner />);
 		}
-		console.log('rendering area lists')
-		return <AreaList />;
+
+		return (
+				<AreaList style={{flex: 1}} />
+			);
 	}
 
 	render() {
 			return (
-				<KeyboardAwareScrollView
-					keyboardShouldPersistTaps='handled'
-					
-				>
-				<View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-					<Card>
-						<CardSection>
-							<Autocomplete 
-								style={styles.queryFontStyle}
-								data={this.props.autoCompleteList}
-								defaultValue={this.props.currentQuery}
-								hideResults={!this.state.showSuggestions}
-								onChangeText={this.onQueryChange.bind(this)}
-							
-							renderItem={item => (
-								<TouchableOpacity 
-									onPress={this.onSuggestionSelect.bind(this, item)}
-								>
-								<CardSection>
-								<Text style={styles.autoSuggestFontStyle}>{item}</Text>
-								</CardSection>
-								</TouchableOpacity>
+				
+				<View style={{flex:1}}>
+					<CardSection>
+						<Autocomplete 
+							style={styles.queryFontStyle}
+							data={this.props.autoCompleteList}
+							defaultValue={this.props.currentQuery}
+							hideResults={!this.state.showSuggestions}
+							onChangeText={this.onQueryChange.bind(this)}
+						
+						renderItem={item => (
+							<TouchableOpacity 
+								onPress={this.onAutoCompleteSelect.bind(this, item)}
+							>
+							<CardSection>
+							<Text style={styles.autoSuggestFontStyle}>{item}</Text>
+							</CardSection>
+							</TouchableOpacity>
 
-								)}
-							/>
+							)}
+						/>
 
-						</CardSection>
-						<CardSection>
-							<Button onPress={this.onDetectLocationPressed.bind(this)}>
-								Detect My Location
-							</Button>
-						</CardSection>
+					</CardSection>
+					<CardSection>
+						<Button onPress={this.onDetectLocationPressed.bind(this)}>
+							Detect My Location
+						</Button>
+					</CardSection>
 
-						{this.onDetectionFailed()}
+					{this.onDetectionFailed()}
 
-						{this.renderAreaList()}
+					<KeyboardAwareScrollView
+						keyboardShouldPersistTaps='handled'
+					>
+						<ScrollView >
+							{this.renderAreaList()}
+						</ScrollView>
+					</KeyboardAwareScrollView>
 
-						<CardSection style={{ paddingTop: 15 }}>
-							<Button >
-								Choose For Me!
-							</Button>
-						</CardSection>
-
-					</Card>
+					<CardSection>
+						<Button>
+							Choose For Me!
+						</Button>
+					</CardSection>
 				</View>
-				</KeyboardAwareScrollView>
 				
 				);
 	}
@@ -109,7 +110,13 @@ const styles = {
 
 	queryFontStyle: {
 		fontSize: 20
+	},
+
+	bottomButtonStyle: {
+		paddingTop: 15,
+		flex: 1
 	}
+
 };
 
 const mapStateToProps = ({ googleAPI }) => {
@@ -128,4 +135,4 @@ export default connect(mapStateToProps, {
 	findAutoComplete, 
 	clearAutoComplete, 
 	setCurrentQuery, 
-	findVicinityFromGPS })(RandomAreaSuggest);
+	findVicinityFromGPS, findNearbyAreas })(RandomAreaSuggest);
