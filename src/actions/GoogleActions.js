@@ -6,7 +6,9 @@ import {
 	POPULATE_AUTOCOMPLETE,
 	SET_QUERY, 
 	CLEAR_AUTOCOMPLETE,
-	SHOW_DETECT_ERROR
+	SHOW_DETECT_ERROR,
+	POPULATE_SUGGESTION_LIST,
+	FIND_NEARBY_AREAS
 
 } from './types';
 import { KEY } from '../key';
@@ -34,8 +36,8 @@ export const findAutoComplete = ({ query }) => {
 				// console.log(json)
 
 				json_data.then((data) => {
-					console.log(data);
-					console.log(_.map(data.predictions, 'description'));
+					// console.log(data);
+					// console.log(_.map(data.predictions, 'description'));
 					dispatch({ type: POPULATE_AUTOCOMPLETE, payload: _.map(data.predictions, 'description') });
 				});
 			})
@@ -62,7 +64,36 @@ export const clearAutoComplete = () => {
 
 export const findNearbyAreas = (areaName) => {
 	return (dispatch) => {
-		
+		dispatch({
+			type: FIND_NEARBY_AREAS
+		})
+		fetch(`'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${areaName}&key=${KEY}`)
+		.then(
+			whichPlaceResponse => {
+				const json_data = whichPlaceResponse.json();
+				json_data.then(whichPlaceData => {
+					const location = whichPlaceData.results[0].geometry.location;
+					fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=500&key=${KEY}`)
+					.then(
+						suggestionsListResponse => { 
+							const json_data = suggestionsListResponse.json();
+							json_data.then(suggestionListData => {
+								dispatch({
+									type: POPULATE_SUGGESTION_LIST,
+									payload: _.pick(suggestionListData.results, [
+											'geometry', 
+											'name',
+											'types',
+											'vicinity'
+										])
+								});
+							});
+						}
+
+						);
+				});
+			}
+			)
 	};
 };
 
@@ -77,11 +108,15 @@ export const findVicinityFromGPS = () => {
 					response => {
 						const json_data = response.json();
 						json_data.then(data => {
-							console.log(data)
+							// console.log(data)
 							dispatch(
 							{
 								type: SET_QUERY,
-								payload: { query: data.results[0].vicinity }
+								payload: { query: data.results[0].name }
+							})
+							dispatch({
+								type: POPULATE_SUGGESTION_LIST,
+								payload: data.results
 							})
 						}
 						)

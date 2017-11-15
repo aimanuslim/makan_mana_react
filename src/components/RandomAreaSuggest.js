@@ -40,9 +40,11 @@ class RandomAreaSuggest extends Component {
 	}
 
 	renderAreaList() {
-		if(this.props.findingSuggestion){
-			return (<Spinner></Spinner>)
+		if (this.props.findingSuggestion) {
+			console.log('returning spinner')
+			return (<Spinner />);
 		}
+		console.log('rendering area lists')
 		return <AreaList />;
 	}
 
@@ -81,7 +83,7 @@ class RandomAreaSuggest extends Component {
 							</Button>
 						</CardSection>
 
-						{this.onDetectionFailed}
+						{this.onDetectionFailed()}
 
 						{this.renderAreaList()}
 
@@ -114,11 +116,12 @@ const mapStateToProps = ({ googleAPI }) => {
 	const { 
 		autoCompleteList, 
 		autoCompLoading, 
+		findingSuggestion,
 		queryEntered, 
 		currentQuery, 
-		detectLocationFailed 
+		detectLocationFailed, 
 	} = googleAPI;
-	return { autoCompleteList, autoCompLoading, queryEntered, currentQuery, detectLocationFailed };
+	return { autoCompleteList, autoCompLoading, findingSuggestion, queryEntered, currentQuery, detectLocationFailed };
 };
 
 export default connect(mapStateToProps, { 
