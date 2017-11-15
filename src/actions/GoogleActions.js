@@ -3,11 +3,10 @@ import fetch from 'cross-fetch';
 import _ from 'lodash';
 import { 
 	FIND_AUTOCOMPLETE,
-	FOUND_AUTOCOMPLETE,
+	POPULATE_AUTOCOMPLETE,
 	SET_QUERY, 
 	CLEAR_AUTOCOMPLETE,
-	AREA_DETECTED,
-	DETECTION_ERROR
+	SHOW_DETECT_ERROR
 
 } from './types';
 import { KEY } from '../key';
@@ -37,7 +36,7 @@ export const findAutoComplete = ({ query }) => {
 				json_data.then((data) => {
 					console.log(data);
 					console.log(_.map(data.predictions, 'description'));
-					dispatch({ type: FOUND_AUTOCOMPLETE, payload: _.map(data.predictions, 'description') });
+					dispatch({ type: POPULATE_AUTOCOMPLETE, payload: _.map(data.predictions, 'description') });
 				});
 			})
 		.catch(
@@ -51,7 +50,7 @@ export const findAutoComplete = ({ query }) => {
 export const setCurrentQuery = ({query}) => {
 	return {
 		type: SET_QUERY,
-		payload: query
+		payload: { query: query }
 	}
 }
 
@@ -81,7 +80,7 @@ export const findVicinityFromGPS = () => {
 							console.log(data)
 							dispatch(
 							{
-								type: AREA_DETECTED,
+								type: SET_QUERY,
 								payload: { query: data.results[0].vicinity }
 							})
 						}
@@ -90,7 +89,7 @@ export const findVicinityFromGPS = () => {
 					)
 			},
 				(error) => {
-					dispatch({ type: DETECTION_ERROR });
+					dispatch({ type: SHOW_DETECT_ERROR });
 					console.log(error);
 				},
 				{ enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },

@@ -5,7 +5,7 @@ import Autocomplete from 'react-native-autocomplete-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Permissions from 'react-native-permissions';
 
-import { Card, CardSection, Button } from './common/index';
+import { Card, CardSection, Button, Spinner } from './common/index';
 import AreaList from './AreaList';
 import { findAutoComplete, clearAutoComplete, setCurrentQuery, findVicinityFromGPS } from '../actions';
 
@@ -39,12 +39,11 @@ class RandomAreaSuggest extends Component {
 		}
 	}
 
-	renderAreaList(){
-		if(this.props.findingSuggestion) {
-			return (<Spinner>)
+	renderAreaList() {
+		if(this.props.findingSuggestion){
+			return (<Spinner></Spinner>)
 		}
-
-		return <AreaList/>
+		return <AreaList />;
 	}
 
 	render() {
