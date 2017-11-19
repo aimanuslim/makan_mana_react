@@ -31,7 +31,6 @@ export default (state = INITIAL_STATE, action) => {
 		case SHOW_DETECT_ERROR:
 			return { ...INITIAL_STATE, detectLocationFailed: true };
 		case POPULATE_SUGGESTION_LIST:
-			console.warn('Populating');		
 			return { ...state, suggestionsList: action.payload, findingSuggestion: false };
 		case FIND_NEARBY_AREAS:
 			return { ...state, findingSuggestion: true };

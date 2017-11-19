@@ -62,39 +62,76 @@ export const clearAutoComplete = () => {
 	};
 };
 
+function fetchAreaDetails(placeid) {
+	return new Promise((resolve, reject) => {
+		console.warn(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeid}&key=${KEY}`)
+		fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeid}&key=${KEY}`)
+		.then(
+			placeDetailsResponse => {
+				console.warn("Got response for area details")
+				console.warn(placeDetailsResponse)
+				const json = placeDetailsResponse.json();
+				json.then(placeDetailData => {
+					resolve(placeDetailData.result);
+				});
+			})
+		.catch(error => {
+			console.warn("Rejected in fetch area details");
+			reject(error)
+		});
+	});
+}
+
 export const findNearbyAreas = (areaName) => {
 	return (dispatch) => {
 		dispatch({
 			type: FIND_NEARBY_AREAS
-		})
-		console.warn("query " + areaName)
-		fetch(`'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${areaName}&key=${KEY}`)
+		});
+		fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURI(areaName)}&key=${KEY}`)
 		.then(
 			whichPlaceResponse => {
 				const json_data = whichPlaceResponse.json();
-				json_data.then(whichPlaceData => {
-					const location = whichPlaceData.results[0].geometry.location;
-					fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.lng}&radius=500&type=restaurant&key=${KEY}`)
-					.then(
-						suggestionsListResponse => { 
-							const json_data = suggestionsListResponse.json();
-							json_data.then(suggestionListData => {
-								dispatch({
-									type: POPULATE_SUGGESTION_LIST,
-									payload: _.pick(suggestionListData.results, [
-											'geometry', 
-											'name',
-											'types',
-											'vicinity'
-										])
-								});
-							});
-						}
-
-						);
+				const location = json_data.then(whichPlaceData => {
+					return whichPlaceData.results[0].geometry.location;
 				});
-			}
-			)
+				return location;
+		})
+		.then(
+			locationData => {
+			return fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationData.lat},${locationData.lng}&radius=500&type=restaurant&key=${KEY}`);
+		})
+		.then(suggestionListResponse => {
+			const json_data = suggestionListResponse.json();
+			json_data.then(suggestionListData => {
+				return suggestionListData.results;
+			})
+			.then(results => {
+				const promises = results.map(placeInfo => {
+					console.warn("here");
+					console.warn(placeInfo);
+					return fetchAreaDetails(placeInfo.place_id)
+					.then(placeDetails => {
+						console.warn("Got response before destructuring")
+						const { name, rating, international_phone_number, geometry, opening_hours } = placeDetails;
+						return { name, rating, international_phone_number, geometry, opening_hours };
+					})
+					.catch(e => console.warn("Rejected in getting promises"))
+				});
+				// Wait for all Promises to complete
+				Promise.all(promises)
+				.then(arrayOfPlaceDetails => {
+					// Handle results
+					dispatch({
+						type: POPULATE_SUGGESTION_LIST,
+						payload: arrayOfPlaceDetails
+					});
+				})
+				.catch(e => {
+					console.error(e);
+				});	
+			});
+		})
+		.catch(e => console.error(e));
 	};
 };
 
