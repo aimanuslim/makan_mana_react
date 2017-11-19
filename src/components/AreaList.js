@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 
@@ -14,7 +14,7 @@ class AreaList extends Component {
 				renderItem={(place) => (
 					<ListItem place={place} />
 				)}
-				keyExtractor={place => place.name}
+				keyExtractor={place => place.place_id}
 			/>
 			</View>
 			);

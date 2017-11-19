@@ -2,6 +2,7 @@ import React from 'react';
 import { Scene, Router } from 'react-native-router-flux';
 import SelectMode from './components/SelectMode';
 import RandomAreaSuggest from './components/RandomAreaSuggest';
+import PlaceDetails from './components/PlaceDetails';
 
 
 const RouterComponent = () => {
@@ -19,6 +20,11 @@ const RouterComponent = () => {
 					key="enterArea"
 					component={RandomAreaSuggest}
 
+				/>
+
+				<Scene 
+					key="viewPlaceDetails"
+					component={PlaceDetails}
 				/>
 			</Scene>
 		</Router>
