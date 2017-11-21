@@ -103,13 +103,16 @@ class RandomAreaSuggest extends Component {
 }
 
 const styles = {
+
 	autoSuggestFontStyle: {
 		fontWeight: 'bold',
-		fontSize: 15
+		fontSize: 15,
+		padding: 15
 	},
 
 	queryFontStyle: {
-		fontSize: 20
+		fontSize: 20,
+		padding: 20
 	},
 
 	bottomButtonStyle: {
