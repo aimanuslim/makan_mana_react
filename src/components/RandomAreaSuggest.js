@@ -60,7 +60,7 @@ class RandomAreaSuggest extends Component {
 						keyboardShouldPersistTaps='handled'
 					>
 						<ScrollView>
-							<AreaList style={{flex: 1}} />
+							<AreaList style={{flex: 1}} data={this.props.suggestionsList}/>
 						</ScrollView>
 					</KeyboardAwareScrollView>
 			);

@@ -19,7 +19,11 @@ class SelectMode extends Component {
 					</Button>
 				</CardSection>
 				<CardSection>
-					<Button>
+					<Button onPress={() => 
+						{
+							Actions.viewFavorites();
+						}
+					}>
 						Select From Favourites
 					</Button>
 				</CardSection>

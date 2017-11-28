@@ -10,7 +10,7 @@ class AreaList extends Component {
 		return (
 			<View>
 			<FlatList
-				data={this.props.suggestionsList}
+				data={this.props.data}
 				renderItem={(place) => (
 					<ListItem place={place} />
 				)}

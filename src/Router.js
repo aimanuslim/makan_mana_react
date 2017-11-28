@@ -3,6 +3,7 @@ import { Scene, Router } from 'react-native-router-flux';
 import SelectMode from './components/SelectMode';
 import RandomAreaSuggest from './components/RandomAreaSuggest';
 import PlaceDetails from './components/PlaceDetails';
+import FavoriteScreen from './components/FavoriteScreen';
 
 
 const RouterComponent = () => {
@@ -26,6 +27,14 @@ const RouterComponent = () => {
 					key="viewPlaceDetails"
 					title="Place Details"					
 					component={PlaceDetails}
+				/>
+
+				<Scene
+					onRight={() => {}}
+					rightTitle="Add"
+					key="viewFavorites"
+					title="Favorites"
+					component={FavoriteScreen}	 
 				/>
 			</Scene>
 		</Router>
