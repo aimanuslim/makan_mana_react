@@ -86,7 +86,8 @@ function getPlaceDetailsListFromName(dispatch, areaName) {
 		whichPlaceResponse => {
 			const json_data = whichPlaceResponse.json();
 			const location = json_data.then(whichPlaceData => {
-				return whichPlaceData.results[0].geometry.location;
+				// how to fix results being zero
+				return whichPlaceData.results[0].geometry.location;	
 			});
 			return location;
 	})
@@ -103,8 +104,8 @@ function getPlaceDetailsListFromName(dispatch, areaName) {
 			const promises = results.map(placeInfo => {
 				return fetchAreaDetails(placeInfo.place_id)
 				.then(placeDetails => {
-					const { name, rating, international_phone_number, geometry, opening_hours } = placeDetails;
-					return { name, rating, international_phone_number, geometry, opening_hours };
+					const { name, rating, international_phone_number, geometry, opening_hours, website, price_level, place_id  } = placeDetails;
+					return { name, rating, international_phone_number, geometry, opening_hours, website, price_level, place_id };
 				})
 				.catch(e => console.warn("Rejected in getting promises"))
 			});
@@ -122,7 +123,6 @@ function getPlaceDetailsListFromName(dispatch, areaName) {
 			});	
 		});
 	})
-	.catch(e => console.error(e));
 }
 
 
@@ -146,8 +146,8 @@ function getPlaceDetailsListFromLocation(dispatch, location){
 			const promises = results.map(placeInfo => {
 				return fetchAreaDetails(placeInfo.place_id)
 				.then(placeDetails => {
-					const { name, rating, international_phone_number, geometry, opening_hours } = placeDetails;
-					return { name, rating, international_phone_number, geometry, opening_hours };
+					const { name, rating, international_phone_number, geometry, opening_hours, website, price_level, place_id  } = placeDetails;
+					return { name, rating, international_phone_number, geometry, opening_hours, website, price_level, place_id  };
 				})
 				.catch(e => console.warn("Rejected in getting promises"))
 			});

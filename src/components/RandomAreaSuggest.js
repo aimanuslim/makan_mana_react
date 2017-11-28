@@ -4,10 +4,16 @@ import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Permissions from 'react-native-permissions';
+import { Actions } from 'react-native-router-flux';
 
 import { Card, CardSection, Button, Spinner } from './common/index';
 import AreaList from './AreaList';
 import { findAutoComplete, clearAutoComplete, setCurrentQuery, findVicinityFromGPS, findNearbyAreas } from '../actions';
+
+function getRandomIndex(min, max) {
+	return Math.floor(min + Math.random() * (max - min));
+}
+
 
 class RandomAreaSuggest extends Component {
 	state = { autoCompleteQuery: '', 
@@ -42,12 +48,31 @@ class RandomAreaSuggest extends Component {
 
 	renderAreaList() {
 		if (this.props.findingSuggestion) {
-			return (<Spinner />);
+			return (
+				<View style={styles.spinnerContainerStyle}>
+					<Spinner style={styles.spinnerStyle} />
+				</View>
+				);
 		}
 
 		return (
-				<AreaList style={{flex: 1}} />
+				<KeyboardAwareScrollView
+						keyboardShouldPersistTaps='handled'
+					>
+						<ScrollView>
+							<AreaList style={{flex: 1}} />
+						</ScrollView>
+					</KeyboardAwareScrollView>
 			);
+	}
+
+
+	onChooseForMePressed(placesCount) {
+		const randomIndex = getRandomIndex(0, placesCount);
+		console.log(this.props.suggestionsList);
+		console.log('index is ' + randomIndex);
+		console.log(this.props.suggestionsList[randomIndex]);
+		Actions.viewPlaceDetails({ place: { item: this.props.suggestionsList[randomIndex] }, random: true });
 	}
 
 	render() {
@@ -83,16 +108,10 @@ class RandomAreaSuggest extends Component {
 
 					{this.onDetectionFailed()}
 
-					<KeyboardAwareScrollView
-						keyboardShouldPersistTaps='handled'
-					>
-						<ScrollView >
-							{this.renderAreaList()}
-						</ScrollView>
-					</KeyboardAwareScrollView>
-
+					{this.renderAreaList()}
+					
 					<CardSection>
-						<Button>
+						<Button onPress={() => this.onChooseForMePressed(this.props.suggestionsList.length)}>
 							Choose For Me!
 						</Button>
 					</CardSection>
@@ -118,6 +137,18 @@ const styles = {
 	bottomButtonStyle: {
 		paddingTop: 15,
 		flex: 1
+	},
+
+	spinnerStyle: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+
+	spinnerContainerStyle: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
 	}
 
 };
@@ -130,8 +161,9 @@ const mapStateToProps = ({ googleAPI }) => {
 		queryEntered, 
 		currentQuery, 
 		detectLocationFailed, 
+		suggestionsList,
 	} = googleAPI;
-	return { autoCompleteList, autoCompLoading, findingSuggestion, queryEntered, currentQuery, detectLocationFailed };
+	return { autoCompleteList, autoCompLoading, findingSuggestion, queryEntered, currentQuery, detectLocationFailed, suggestionsList };
 };
 
 export default connect(mapStateToProps, { 

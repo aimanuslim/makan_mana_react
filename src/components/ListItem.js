@@ -10,7 +10,7 @@ class ListItem extends Component {
 		return (
 			<TouchableWithoutFeedback 
 				onPress={() => {
-					Actions.viewPlaceDetails({ place: this.props.place });
+					Actions.viewPlaceDetails({ place: this.props.place, random: false });
 				}}
 			>
 				<View>

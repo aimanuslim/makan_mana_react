@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import { CardSection } from './common';
 
 class PlaceDetails extends Component {
+
+	getOpeningHours(opening_hours) {
+		const today = new Date();
+		if (opening_hours) {
+			const { weekday_text } = opening_hours;
+		 	return weekday_text[today.getDay()];
+		} else {
+			return null;
+		}
+	}
+
 	render() {
 		const place = this.props.place.item;
-		// console.warn(this.props.place)
+		const { opening_hours } = place;
 		return (
 		<View>
 			<CardSection style={styles.sectionStyle}>
@@ -35,6 +47,12 @@ class PlaceDetails extends Component {
 				</View>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
+				<Text style={styles.labelTextStyle}>Open Period</Text>
+				<View style={{flex: 1}}>
+				<Text style={styles.valueTextStyle}>{this.getOpeningHours(opening_hours)}</Text>
+				</View>
+			</CardSection>
+			<CardSection style={styles.sectionStyle}>
 				<Text style={styles.labelTextStyle}>Website</Text>
 				<View style={{flex: 1}}>
 				<Text style={styles.valueTextStyle}>{place.website}</Text>
@@ -52,14 +70,20 @@ const styles = {
 		justifyContent: 'space-between'
 	},
 	labelTextStyle: {
-		fontSize: 20,
-		padding: 20,
+		fontSize: 12,
+		paddingTop: 12,
+		paddingBottom: 12,
+		paddingLeft: 5,
+		paddingRight: 5,
 		fontWeight: 'bold',
 		alignSelf: 'flex-start'
 	},
 	valueTextStyle: {
-		fontSize: 20,
-		padding: 20,
+		fontSize: 15,
+		paddingTop: 12,
+		paddingBottom: 12,
+		paddingLeft: 5,
+		paddingRight: 5,
 		alignSelf: 'flex-end',
 		flexWrap: 'wrap'
 	}

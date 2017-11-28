@@ -14,7 +14,10 @@ class AreaList extends Component {
 				renderItem={(place) => (
 					<ListItem place={place} />
 				)}
-				keyExtractor={place => place.place_id}
+				keyExtractor={(place) => {
+					return place.place_id;
+					}
+				}
 			/>
 			</View>
 			);
