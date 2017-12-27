@@ -1,5 +1,5 @@
 import React from 'react';
-import { Scene, Router } from 'react-native-router-flux';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import SelectMode from './components/SelectMode';
 import RandomAreaSuggest from './components/RandomAreaSuggest';
 import PlaceDetails from './components/PlaceDetails';
@@ -30,7 +30,7 @@ const RouterComponent = () => {
 				/>
 
 				<Scene
-					onRight={() => {}}
+					onRight={() => Actions.createPlace()}
 					rightTitle="Add"
 					key="viewFavorites"
 					title="Favorites"
