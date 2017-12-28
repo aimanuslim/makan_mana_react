@@ -29,8 +29,14 @@ const RouterComponent = () => {
 					component={PlaceDetails}
 				/>
 
+				<Scene 
+					key="addPlace"
+					title="New Place"
+					component={PlaceAdd}
+				/>
+
 				<Scene
-					onRight={() => Actions.createPlace()}
+					onRight={() => Actions.addPlace()}
 					rightTitle="Add"
 					key="viewFavorites"
 					title="Favorites"
