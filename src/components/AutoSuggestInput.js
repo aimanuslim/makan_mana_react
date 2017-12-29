@@ -8,6 +8,10 @@ import { findAutoComplete, clearAutoComplete, setCurrentQuery, findNearbyAreas }
 
 class AutoSuggestionInput extends Component {
 
+	state = { autoCompleteQuery: '', 
+				showSuggestions: true }
+
+
 	onQueryChange = (text) => {
 		this.props.findAutoComplete({ query: text });
 		this.setState({ 
@@ -21,7 +25,8 @@ class AutoSuggestionInput extends Component {
 		});
 		this.props.clearAutoComplete();
 		this.props.setCurrentQuery({ query: item });
-		this.props.findNearbyAreas(item);
+		const onSelectFunc = this.props.onSelect;
+		onSelectFunc(item);
 		Keyboard.dismiss();
 	}
 
@@ -64,4 +69,13 @@ const styles = {
 	},
 };
 
-export default connect(mapStateToProps, { findAutoComplete })(AutoSuggestionInput)
+const mapStateToProps = ({ googleAPI }) => {
+	const { 
+		autoCompleteList, 
+		currentQuery, 
+		newPlace
+	} = googleAPI;
+	return { autoCompleteList, currentQuery, newPlace };
+};
+
+export default connect(mapStateToProps, { findAutoComplete, clearAutoComplete, setCurrentQuery, findNearbyAreas })(AutoSuggestionInput)

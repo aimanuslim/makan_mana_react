@@ -1,44 +1,27 @@
 import React,  { Component } from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+
+import AutoSuggestInput from './AutoSuggestInput';
+import { getSinglePlaceDetailsByName } from '../actions';
 
 class PlaceAdd extends Component {
 	render() {
-		<View>
-			<CardSection>
-				<Input 
-					label="Name"
-					placeholder="Rumah Anda"
-					onChangeText={value => }
+		return (
+			<View>
+				<AutoSuggestInput
+					onSelect={this.props.getSinglePlaceDetailsByName}
 				/>
-
-			</CardSection>
-			<CardSection>
-				<Autocomplete 
-					style={styles.queryFontStyle}
-					data={this.props.autoCompleteList}
-					defaultValue={this.props.currentQuery}
-					hideResults={!this.state.showSuggestions}
-					onChangeText={this.onQueryChange.bind(this)}
-
-					renderItem={item => (
-						<TouchableOpacity 
-						onPress={this.onAutoCompleteSelect.bind(this, item)}
-						>
-						<CardSection>
-						<Text style={styles.autoSuggestFontStyle}>{item}</Text>
-						</CardSection>
-						</TouchableOpacity>
-
-						)}
-				/>
-			</CardSection>
-		</View>	
+			</View>
+			
+			);
 	}
 } 
 
-const styles = {
-	queryFontStyle: {
-		fontSize: 20,
-		padding: 20
-	},
-}
+
+export const mapStateToProps = ({ googleAPI }) => {
+	const { newPlace } = googleAPI;
+	return { newPlace };
+};
+
+export default connect(mapStateToProps, { getSinglePlaceDetailsByName })(PlaceAdd);

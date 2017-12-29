@@ -8,8 +8,8 @@ import {
 	CLEAR_AUTOCOMPLETE,
 	SHOW_DETECT_ERROR,
 	POPULATE_SUGGESTION_LIST,
-	FIND_NEARBY_AREAS
-
+	FIND_NEARBY_AREAS,
+	FILL_PLACE_DATA
 } from './types';
 import { KEY } from '../key';
 
@@ -125,6 +125,23 @@ function getPlaceDetailsListFromName(dispatch, areaName) {
 	})
 }
 
+
+export const getSinglePlaceDetailsByName = (query) => {
+	return (dispatch) => {
+		fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURI(query)}&key=${KEY}`)
+		.then(
+			whichPlaceResponse => {
+			const json_data = whichPlaceResponse.json();
+			const location = json_data.then(whichPlaceData => {
+				// how to fix results being zero
+				dispatch({
+					type: FILL_PLACE_DATA,
+					payload: whichPlaceData
+				});
+			});
+		});
+	};
+};
 
 export const findNearbyAreas = (areaName) => {
 	return (dispatch) => {

@@ -15,7 +15,8 @@ const INITIAL_STATE = {
 	suggestionsList: [],
 	queryEntered: false,
 	currentQuery: '',
-	detectLocationFailed: false
+	detectLocationFailed: false,
+	newPlace: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -34,6 +35,8 @@ export default (state = INITIAL_STATE, action) => {
 			return { ...state, suggestionsList: action.payload, findingSuggestion: false };
 		case FIND_NEARBY_AREAS:
 			return { ...state, findingSuggestion: true };
+		case FILL_PLACE_DATA:
+			return {...state, findingSuggestion: false, newPlace: action.payload }
 		default:
 			return state;
 	}

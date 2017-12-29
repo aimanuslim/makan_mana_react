@@ -4,6 +4,7 @@ import SelectMode from './components/SelectMode';
 import RandomAreaSuggest from './components/RandomAreaSuggest';
 import PlaceDetails from './components/PlaceDetails';
 import FavoriteScreen from './components/FavoriteScreen';
+import PlaceAdd from './components/PlaceAdd';
 
 
 const RouterComponent = () => {

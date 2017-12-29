@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 
 import { Card, CardSection, Button, Spinner } from './common/index';
 import AreaList from './AreaList';
+import AutoSuggestInput from './AutoSuggestInput';
 import { findAutoComplete, clearAutoComplete, setCurrentQuery, findVicinityFromGPS, findNearbyAreas } from '../actions';
 
 function getRandomIndex(min, max) {
@@ -79,27 +80,9 @@ class RandomAreaSuggest extends Component {
 			return (
 				
 				<View style={{flex:1}}>
-					<CardSection>
-						<Autocomplete 
-							style={styles.queryFontStyle}
-							data={this.props.autoCompleteList}
-							defaultValue={this.props.currentQuery}
-							hideResults={!this.state.showSuggestions}
-							onChangeText={this.onQueryChange.bind(this)}
-						
-						renderItem={item => (
-							<TouchableOpacity 
-								onPress={this.onAutoCompleteSelect.bind(this, item)}
-							>
-							<CardSection>
-							<Text style={styles.autoSuggestFontStyle}>{item}</Text>
-							</CardSection>
-							</TouchableOpacity>
-
-							)}
-						/>
-
-					</CardSection>
+					<AutoSuggestInput 
+						onSelect={this.props.findNearbyAreas}
+					/>
 					<CardSection>
 						<Button onPress={this.onDetectLocationPressed.bind(this)}>
 							Detect My Location
@@ -170,4 +153,5 @@ export default connect(mapStateToProps, {
 	findAutoComplete, 
 	clearAutoComplete, 
 	setCurrentQuery, 
-	findVicinityFromGPS, findNearbyAreas })(RandomAreaSuggest);
+	findVicinityFromGPS, 
+	findNearbyAreas })(RandomAreaSuggest);
