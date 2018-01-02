@@ -5,7 +5,9 @@ import {
 	CLEAR_AUTOCOMPLETE,
 	SHOW_DETECT_ERROR,
 	POPULATE_SUGGESTION_LIST,
-	FIND_NEARBY_AREAS
+	FIND_NEARBY_AREAS,
+	FILL_PLACE_DATA,
+	LOAD_PLACE_DATA
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,7 +18,10 @@ const INITIAL_STATE = {
 	queryEntered: false,
 	currentQuery: '',
 	detectLocationFailed: false,
-	newPlace: ''
+	newPlace: '',
+	newPlaceFound: false,
+	findingNewPlace: false,
+	selectedNewPlace: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,15 +33,17 @@ export default (state = INITIAL_STATE, action) => {
 		case CLEAR_AUTOCOMPLETE:
 			return { ...INITIAL_STATE };
 		case SET_QUERY:
-			return { ...INITIAL_STATE, queryEntered: true, currentQuery: action.payload.query };
+			return { ...INITIAL_STATE, queryEntered: true, currentQuery: action.payload.query, selectedNewPlace: action.payload.query };
 		case SHOW_DETECT_ERROR:
 			return { ...INITIAL_STATE, detectLocationFailed: true };
 		case POPULATE_SUGGESTION_LIST:
 			return { ...state, suggestionsList: action.payload, findingSuggestion: false };
 		case FIND_NEARBY_AREAS:
 			return { ...state, findingSuggestion: true };
+		case LOAD_PLACE_DATA:
+			return { ...state, findingNewPlace: true };
 		case FILL_PLACE_DATA:
-			return {...state, findingSuggestion: false, newPlace: action.payload }
+			return { ...state, newPlaceFound: true, findingNewPlace: false, newPlace: action.payload }
 		default:
 			return state;
 	}

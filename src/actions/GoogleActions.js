@@ -9,7 +9,8 @@ import {
 	SHOW_DETECT_ERROR,
 	POPULATE_SUGGESTION_LIST,
 	FIND_NEARBY_AREAS,
-	FILL_PLACE_DATA
+	FILL_PLACE_DATA,
+	LOAD_PLACE_DATA
 } from './types';
 import { KEY } from '../key';
 
@@ -128,6 +129,10 @@ function getPlaceDetailsListFromName(dispatch, areaName) {
 
 export const getSinglePlaceDetailsByName = (query) => {
 	return (dispatch) => {
+		dispatch({
+			type: LOAD_PLACE_DATA
+		});
+
 		fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURI(query)}&key=${KEY}`)
 		.then(
 			whichPlaceResponse => {
