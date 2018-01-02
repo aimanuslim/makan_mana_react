@@ -9,8 +9,19 @@ import { getSinglePlaceDetailsByName } from '../actions';
 
 class PlaceAdd extends Component {
 
+	getOpeningHours(opening_hours) {
+		const today = new Date();
+		if (opening_hours) {
+			const { weekday_text } = opening_hours;
+		 	return weekday_text[today.getDay()];
+		} else {
+			return null;
+		}
+	}
+
+
 	renderPlaceDetails() {
-		if (!this.props.newPlaceFound) {
+		if (!this.props.newPlaceFound && !this.props.findingNewPlace) {
 			return (<View></View>);
 		}
 
@@ -25,14 +36,38 @@ class PlaceAdd extends Component {
 			<View>
 				<CardSection style={styles.sectionStyle}>
 					<Text style={styles.labelTextStyle}>Name</Text>
-					<View style={{ flex: 1 }}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.results[0].name}</Text>
-					</View>	
+					<View style={{flex: 1}}>
+					<Text style={styles.valueTextStyle}>{this.props.newPlace.name}</Text>
+					</View>
+				</CardSection>
+				<CardSection style={styles.sectionStyle}>
+					<Text style={styles.labelTextStyle}>Rating</Text>
+					<View style={{flex: 1}}>
+					<Text style={styles.valueTextStyle}>{this.props.newPlace.rating}</Text>
+					</View>
+				</CardSection>
+				<CardSection style={styles.sectionStyle}>
+					<Text style={styles.labelTextStyle}>Pricing</Text>
+					<View style={{flex: 1}}>
+					<Text style={styles.valueTextStyle}>{this.props.newPlace.price_level}</Text>
+					</View>
 				</CardSection>
 				<CardSection style={styles.sectionStyle}>
 					<Text style={styles.labelTextStyle}>Phone</Text>
-					<View style={{ flex: 1 }}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.results[0].international_phone_number}</Text>
+					<View style={{flex: 1}}>
+					<Text style={styles.valueTextStyle}>{this.props.newPlace.international_phone_number}</Text>
+					</View>
+				</CardSection>
+				<CardSection style={styles.sectionStyle}>
+					<Text style={styles.labelTextStyle}>Open Period</Text>
+					<View style={{flex: 1}}>
+					<Text style={styles.valueTextStyle}>{this.getOpeningHours(this.props.newPlace.opening_hours)}</Text>
+					</View>
+				</CardSection>
+				<CardSection style={styles.sectionStyle}>
+					<Text style={styles.labelTextStyle}>Website</Text>
+					<View style={{flex: 1}}>
+					<Text style={styles.valueTextStyle}>{this.props.newPlace.website}</Text>
 					</View>
 				</CardSection>
 			</View>
@@ -42,7 +77,7 @@ class PlaceAdd extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={{ flex: 1 }}>
 				<AutoSuggestInput
 					onSelect={this.props.getSinglePlaceDetailsByName}
 				/>

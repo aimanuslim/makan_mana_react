@@ -138,11 +138,15 @@ export const getSinglePlaceDetailsByName = (query) => {
 			whichPlaceResponse => {
 			const json_data = whichPlaceResponse.json();
 			const location = json_data.then(whichPlaceData => {
-				// how to fix results being zero
-				dispatch({
+				const detailsPromise = fetchAreaDetails(whichPlaceData.results[0].place_id);
+				detailsPromise.then(details => {
+					dispatch({
 					type: FILL_PLACE_DATA,
-					payload: whichPlaceData
-				});
+					payload: details
+					});	
+				}
+				);
+				// how to fix results being zero
 			});
 		});
 	};
