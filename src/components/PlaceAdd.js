@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 
-import { CardSection, Spinner } from './common/index'; 
+import { CardSection, Spinner, Button } from './common/index'; 
 import AutoSuggestInput from './AutoSuggestInput';
 import { getSinglePlaceDetailsByName } from '../actions';
 
@@ -69,6 +69,11 @@ class PlaceAdd extends Component {
 					<View style={{flex: 1}}>
 					<Text style={styles.valueTextStyle}>{this.props.newPlace.website}</Text>
 					</View>
+				</CardSection>
+				<CardSection>
+					<Button style={{ flex: 1 }}>
+						Add Place
+					</Button>
 				</CardSection>
 			</View>
 

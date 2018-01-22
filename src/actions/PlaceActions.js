@@ -5,12 +5,13 @@ import {
 	ADD_PLACES
 } from './types';
 
-export const addPlace = (place)  => {
-	const { currentUser }  = firebase.auth();
-	const {  }
+export const addPlace = ({ name, rating, price_level, international_phone_number, opening_hours  })  => {
 	return (dispatch) => {
-		firebase.database().ref(`/users/${currentUser.uid}/employees`)
-		.push({ })
+		firebase.database().ref('/places')
+		.push({ name, rating, price_level, international_phone_number, opening_hours  })
+		.then(() => {
+			dispatch({ type: ADD_PLACES });
+		});
 	}
 
 }
