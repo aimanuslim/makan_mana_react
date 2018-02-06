@@ -8,3 +8,4 @@ export const FIND_NEARBY_AREAS = 'find_nearby_areas';
 
 export const LOAD_PLACE_DATA = 'load_place_data';
 export const FILL_PLACE_DATA = 'fill_place_data';
+export const ADD_PLACE = 'add_place';

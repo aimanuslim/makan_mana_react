@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { CardSection, Spinner, Button } from './common/index'; 
 import AutoSuggestInput from './AutoSuggestInput';
-import { getSinglePlaceDetailsByName } from '../actions';
+import { getSinglePlaceDetailsByName, addPlace } from '../actions';
 
 class PlaceAdd extends Component {
 
@@ -19,6 +19,10 @@ class PlaceAdd extends Component {
 		}
 	}
 
+	onAddPlace = () => {
+		console.warn(this.props.newPlace)
+		this.props.addPlace(this.props.newPlace);
+	}
 
 	renderPlaceDetails() {
 		if (!this.props.newPlaceFound && !this.props.findingNewPlace) {
@@ -71,7 +75,8 @@ class PlaceAdd extends Component {
 					</View>
 				</CardSection>
 				<CardSection>
-					<Button style={{ flex: 1 }}>
+					<Button style={{ flex: 1 }} onPress={this.onAddPlace.bind(this)}
+					>
 						Add Place
 					</Button>
 				</CardSection>
@@ -139,4 +144,4 @@ const styles = {
 
 };
 
-export default connect(mapStateToProps, { getSinglePlaceDetailsByName })(PlaceAdd);
+export default connect(mapStateToProps, { getSinglePlaceDetailsByName, addPlace })(PlaceAdd);
