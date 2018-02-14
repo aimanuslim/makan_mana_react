@@ -5,17 +5,25 @@ import RandomAreaSuggest from './components/RandomAreaSuggest';
 import PlaceDetails from './components/PlaceDetails';
 import FavoriteScreen from './components/FavoriteScreen';
 import PlaceAdd from './components/PlaceAdd';
+import LoginForm from './components/LoginForm';
 
 
 const RouterComponent = () => {
 	return (
 		<Router>
 			<Scene key="root">
+
+				<Scene 
+					key="login" 
+					component={LoginForm}
+					title="Login"
+					initial
+				/>
+
 				<Scene 
 					key="main" 
 					component={SelectMode}
 					title="Makan Mana?"
-					initial
 				/>
 
 				<Scene 

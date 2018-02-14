@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ListItem from './ListItem';
 
 class AreaList extends Component {
+	
 	render() {
 		return (
 			<View>

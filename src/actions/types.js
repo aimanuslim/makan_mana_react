@@ -9,3 +9,11 @@ export const FIND_NEARBY_AREAS = 'find_nearby_areas';
 export const LOAD_PLACE_DATA = 'load_place_data';
 export const FILL_PLACE_DATA = 'fill_place_data';
 export const ADD_PLACE = 'add_place';
+export const FETCH_PLACES = 'fetch_places';
+
+export const EMAIL_CHANGED = 'email_changed';
+export const PASSWORD_CHANGED = 'password_changed';
+export const LOGIN_USER_SUCCESS = 'login_user_success';
+export const LOGIN_USER_FAIL = 'login_user_fail';
+export const LOGIN_USER = 'login_user';
+
