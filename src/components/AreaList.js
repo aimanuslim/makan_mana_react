@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { }
 
 
 import ListItem from './ListItem';
@@ -25,9 +26,9 @@ class AreaList extends Component {
 	}
 }
 
-const mapStateToProps = ({ googleAPI }) => {
-	const { suggestionsList } = googleAPI;
-	return { suggestionsList };
+const mapStateToProps = ({ place }) => {
+	const { data } = place;
+	return { data };
 };
 
-export default connect(mapStateToProps, {})(AreaList);
+export default connect(mapStateToProps, {  })(AreaList);
