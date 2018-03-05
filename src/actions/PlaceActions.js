@@ -8,7 +8,7 @@ import {
 } from './types';
 
 export const addPlace = ({ name, rating, international_phone_number, opening_hours  })  => {
-	const { currentUser } = firebase.auth;
+	const { currentUser } = firebase.auth();
 
 
 	return (dispatch) => {

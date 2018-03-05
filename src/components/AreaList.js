@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { }
+import { fetchPlaces } from '../actions';
+import _ from 'lodash';
 
 
 import ListItem from './ListItem';
 
 class AreaList extends Component {
+	componentWillMount(){
+		this.props.fetchPlaces();
+	}
+
+
 	
 	render() {
 		return (
 			<View>
 			<FlatList
-				data={this.props.data}
+				data={this.props.places}
 				renderItem={(place) => (
 					<ListItem place={place} />
 				)}
@@ -28,7 +34,15 @@ class AreaList extends Component {
 
 const mapStateToProps = ({ place }) => {
 	const { data } = place;
-	return { data };
+	// console.warn(data)
+	// console.warn(place)
+	console.log(data);
+
+	const places = _.map(data, (val, uid) => {
+		return {...val, uid};
+	});
+	console.log(places);	
+	return { places };
 };
 
-export default connect(mapStateToProps, {  })(AreaList);
+export default connect(mapStateToProps, { fetchPlaces })(AreaList);

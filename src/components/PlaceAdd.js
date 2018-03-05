@@ -20,7 +20,7 @@ class PlaceAdd extends Component {
 	}
 
 	onAddPlace = () => {
-		console.warn(this.props.newPlace)
+		// console.warn(this.props.newPlace)
 		this.props.addPlace(this.props.newPlace);
 	}
 
