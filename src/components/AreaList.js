@@ -13,17 +13,18 @@ class AreaList extends Component {
 	}
 
 
-	
+
 	render() {
 		return (
 			<View>
 			<FlatList
 				data={this.props.places}
+				extraData={this.props.places}
 				renderItem={(place) => (
 					<ListItem place={place} />
 				)}
 				keyExtractor={(place) => {
-					return place.place_id;
+					return place.pid;
 					}
 				}
 			/>
@@ -38,8 +39,8 @@ const mapStateToProps = ({ place }) => {
 	// console.warn(place)
 	console.log(data);
 
-	const places = _.map(data, (val, uid) => {
-		return {...val, uid};
+	const places = _.map(data, (val, pid) => {
+		return {...val, pid};
 	});
 	console.log(places);	
 	return { places };
