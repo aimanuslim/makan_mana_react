@@ -73,7 +73,7 @@ class RandomAreaSuggest extends Component {
 		console.log(this.props.suggestionsList);
 		console.log('index is ' + randomIndex);
 		console.log(this.props.suggestionsList[randomIndex]);
-		Actions.viewPlaceDetails({ place: { item: this.props.suggestionsList[randomIndex] }, random: true });
+		Actions.viewPlaceDetails({ place: this.props.suggestionsList[randomIndex], random: true });
 	}
 
 	render() {

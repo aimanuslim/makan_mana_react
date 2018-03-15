@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Text, TouchableWithoutFeedback } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { CardSection } from './common';
+import { SwipeRow, Button, Icon, View } from 'native-base';
+import { Card, CardSection } from './common';
 
 class ListItem extends Component {
 
@@ -13,13 +14,29 @@ class ListItem extends Component {
 					Actions.viewPlaceDetails({ place: this.props.place, random: false });
 				}}
 			>
-				<View>
-					<CardSection>
-						<Text style={styles.placeTextStyle}>
-							{name}
-						</Text>
-					</CardSection>
-				</View>
+				
+
+					<SwipeRow
+					leftOpenValue={75}
+					rightOpenValue={-75}
+					left={
+						<Button success onPress={() => alert('Add')}>
+						<Icon active name="add" />
+						</Button>
+					}
+					body={
+						<View>
+							<Text style={styles.placeTextStyle}>{name}</Text>
+						</View>
+					}
+					right={
+						<Button danger onPress={() => alert('Trash')}>
+						<Icon active name="trash" />
+						</Button>
+					}
+					/>
+
+				
 			</TouchableWithoutFeedback>
 			);
 	}
@@ -28,7 +45,8 @@ class ListItem extends Component {
 const styles = {
 	placeTextStyle: {
 		fontSize: 18, 
-		paddingLeft: 15
+		paddingLeft: 15,
+		textAlign: 'center'
 	}
 };
 

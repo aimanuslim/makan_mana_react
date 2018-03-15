@@ -38,6 +38,7 @@ class PlaceAdd extends Component {
 		}
 		return (
 			<View>
+				<View>
 				<CardSection style={styles.sectionStyle}>
 					<Text style={styles.labelTextStyle}>Name</Text>
 					<View style={{flex: 1}}>
@@ -74,6 +75,7 @@ class PlaceAdd extends Component {
 					<Text style={styles.valueTextStyle}>{this.props.newPlace.website}</Text>
 					</View>
 				</CardSection>
+				</View>
 				<CardSection>
 					<Button style={{ flex: 1 }} onPress={this.onAddPlace.bind(this)}
 					>

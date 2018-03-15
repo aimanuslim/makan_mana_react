@@ -18,7 +18,7 @@ class PlaceDetails extends Component {
 	}
 
 	render() {
-		const place = this.props.place.item;
+		const place = this.props.place;
 		const { opening_hours } = place;
 		return (
 		<View>
