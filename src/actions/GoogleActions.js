@@ -70,7 +70,7 @@ function fetchAreaDetails(placeid) {
 			placeDetailsResponse => {
 				const json = placeDetailsResponse.json();
 				json.then(placeDetailData => {
-					console.log(placeDetailData.result)
+					// console.log(placeDetailData.result)
 					resolve(placeDetailData.result);
 				});
 			})

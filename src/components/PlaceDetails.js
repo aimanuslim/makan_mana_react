@@ -79,7 +79,7 @@ const styles = {
 		alignSelf: 'flex-start'
 	},
 	valueTextStyle: {
-		fontSize: 15,
+		fontSize: 35,
 		paddingTop: 12,
 		paddingBottom: 12,
 		paddingLeft: 5,

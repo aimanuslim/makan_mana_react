@@ -3,7 +3,8 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 
-import { CardSection, Spinner, Button } from './common/index'; 
+import { CardSection, Spinner, Button } from './common/index';
+import PlaceDetails from './PlaceDetails'; 
 import AutoSuggestInput from './AutoSuggestInput';
 import { getSinglePlaceDetailsByName, addPlace } from '../actions';
 
@@ -38,44 +39,7 @@ class PlaceAdd extends Component {
 		}
 		return (
 			<View>
-				<View>
-				<CardSection style={styles.sectionStyle}>
-					<Text style={styles.labelTextStyle}>Name</Text>
-					<View style={{flex: 1}}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.name}</Text>
-					</View>
-				</CardSection>
-				<CardSection style={styles.sectionStyle}>
-					<Text style={styles.labelTextStyle}>Rating</Text>
-					<View style={{flex: 1}}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.rating}</Text>
-					</View>
-				</CardSection>
-				<CardSection style={styles.sectionStyle}>
-					<Text style={styles.labelTextStyle}>Pricing</Text>
-					<View style={{flex: 1}}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.price_level}</Text>
-					</View>
-				</CardSection>
-				<CardSection style={styles.sectionStyle}>
-					<Text style={styles.labelTextStyle}>Phone</Text>
-					<View style={{flex: 1}}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.international_phone_number}</Text>
-					</View>
-				</CardSection>
-				<CardSection style={styles.sectionStyle}>
-					<Text style={styles.labelTextStyle}>Open Period</Text>
-					<View style={{flex: 1}}>
-					<Text style={styles.valueTextStyle}>{this.getOpeningHours(this.props.newPlace.opening_hours)}</Text>
-					</View>
-				</CardSection>
-				<CardSection style={styles.sectionStyle}>
-					<Text style={styles.labelTextStyle}>Website</Text>
-					<View style={{flex: 1}}>
-					<Text style={styles.valueTextStyle}>{this.props.newPlace.website}</Text>
-					</View>
-				</CardSection>
-				</View>
+				<PlaceDetails place={this.props.newPlace} />
 				<CardSection>
 					<Button style={{ flex: 1 }} onPress={this.onAddPlace.bind(this)}
 					>

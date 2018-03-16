@@ -37,12 +37,12 @@ const mapStateToProps = ({ place }) => {
 	const { data } = place;
 	// console.warn(data)
 	// console.warn(place)
-	console.log(data);
+	// console.log(data);
 
 	const places = _.map(data, (val, pid) => {
 		return {...val, pid};
 	});
-	console.log(places);	
+	// console.log(places);	
 	return { places };
 };
 

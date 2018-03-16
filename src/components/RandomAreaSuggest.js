@@ -70,9 +70,9 @@ class RandomAreaSuggest extends Component {
 
 	onChooseForMePressed(placesCount) {
 		const randomIndex = getRandomIndex(0, placesCount);
-		console.log(this.props.suggestionsList);
-		console.log('index is ' + randomIndex);
-		console.log(this.props.suggestionsList[randomIndex]);
+		// console.log(this.props.suggestionsList);
+		// console.log('index is ' + randomIndex);
+		// console.log(this.props.suggestionsList[randomIndex]);
 		Actions.viewPlaceDetails({ place: this.props.suggestionsList[randomIndex], random: true });
 	}
 
