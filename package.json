@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "cross-fetch": "^1.1.0",
-    "firebase": "^4.10.1",
+    "firebase": "^4.11.0",
     "lodash": "^4.17.4",
     "native-base": "^2.3.10",
     "node-fetch": "^1.7.3",

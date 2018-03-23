@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import { CardSection } from './common';
+import { placeUpdate } from '../actions';
+import { CardSection, Input } from './common';
 
 class PlaceDetails extends Component {
 
@@ -23,10 +24,11 @@ class PlaceDetails extends Component {
 		return (
 		<View>
 			<CardSection style={styles.sectionStyle}>
-				<Text style={styles.labelTextStyle}>Name</Text>
-				<View style={{flex: 1}}>
-				<Text style={styles.valueTextStyle}>{place.name}</Text>
-				</View>
+				<Input
+					label="Name"
+					value={this.props.name}
+					onChangeText={value => this.props.placeUpdate({ prop: 'name', value })}
+				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Text style={styles.labelTextStyle}>Rating</Text>
@@ -70,7 +72,7 @@ const styles = {
 		justifyContent: 'space-between'
 	},
 	labelTextStyle: {
-		fontSize: 12,
+		fontSize: 16,
 		paddingTop: 12,
 		paddingBottom: 12,
 		paddingLeft: 5,
@@ -79,7 +81,7 @@ const styles = {
 		alignSelf: 'flex-start'
 	},
 	valueTextStyle: {
-		fontSize: 35,
+		fontSize: 20,
 		paddingTop: 12,
 		paddingBottom: 12,
 		paddingLeft: 5,
@@ -88,7 +90,12 @@ const styles = {
 		flexWrap: 'wrap'
 	}
 
-}
+};
 
+const mapStateToProps = (state) => {
+  const { name } = state.placeDetails;
 
-export default PlaceDetails;
+  return { name };
+};
+
+export default connect(mapStateToProps, { placeUpdate })(PlaceDetails);

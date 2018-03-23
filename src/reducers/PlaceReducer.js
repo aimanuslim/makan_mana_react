@@ -1,22 +1,16 @@
 import {
-	ADD_PLACE,
 	PLACES_FETCH_SUCCESS
-
 } from '../actions/types';
 
 const INITIAL_STATE = {
-	data: []
-
-}
+	data: [],
+};
 
 export default (state = INITIAL_STATE, action) => {
-	switch(action.type) {
-		case ADD_PLACE:
-			return {...state};
+	switch (action.type) {
 		case PLACES_FETCH_SUCCESS:
-			return {data: action.payload};
+			return { data: action.payload };
 		default:
-			return {...state};
+			return { ...state };
 	}
-
-}
+};
