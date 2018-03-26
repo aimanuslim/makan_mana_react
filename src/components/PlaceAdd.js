@@ -69,6 +69,7 @@ class PlaceAdd extends Component {
 
 export const mapStateToProps = ({ googleAPI }) => {
 	const { newPlace, findingNewPlace, newPlaceFound } = googleAPI;
+	console.log(newPlace)
 	return { newPlace, findingNewPlace, newPlaceFound };
 };
 

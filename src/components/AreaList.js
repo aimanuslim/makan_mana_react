@@ -21,7 +21,7 @@ class AreaList extends Component {
 				data={this.props.places}
 				extraData={this.props.places}
 				renderItem={(place) => (
-					<ListItem place={place} />
+					<ListItem place={place.item} />
 				)}
 				keyExtractor={(place) => {
 					return place.pid;

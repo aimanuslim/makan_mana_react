@@ -6,16 +6,16 @@ import { Card, CardSection } from './common';
 
 class ListItem extends Component {
 
+	onRowPress() {
+		console.warn("Pressed")
+    	Actions.editPlaceDetails({ place: this.props.place, random: false });
+  	}
 	render() {
-		const { name } = this.props.place.item;
+		const { name } = this.props.place;
 		return (
-			<TouchableWithoutFeedback 
-				onPress={() => {
-					Actions.viewPlaceDetails({ place: this.props.place, random: false });
-				}}
-			>
+			
 				
-
+					<View>
 					<SwipeRow
 					leftOpenValue={75}
 					rightOpenValue={-75}
@@ -25,9 +25,13 @@ class ListItem extends Component {
 						</Button>
 					}
 					body={
+						<TouchableWithoutFeedback 
+							onPress={this.onRowPress.bind(this)}
+						>
 						<View>
 							<Text style={styles.placeTextStyle}>{name}</Text>
 						</View>
+						</TouchableWithoutFeedback>
 					}
 					right={
 						<Button danger onPress={() => alert('Trash')}>
@@ -35,9 +39,9 @@ class ListItem extends Component {
 						</Button>
 					}
 					/>
-
+					</View>
 				
-			</TouchableWithoutFeedback>
+			
 			);
 	}
 }

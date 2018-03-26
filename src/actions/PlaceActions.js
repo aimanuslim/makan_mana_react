@@ -42,13 +42,13 @@ export const fetchPlaces = () => {
 	};
 }
 
-export const savePlaces = ({ name, rating, international_phone_number, opening_hours, uid }) => {
+export const savePlaces = ({ name, rating, international_phone_number, opening_hours, website, uid }) => {
 	const { currentUser } = firebase.auth();
 
 
 	return (dispatch) => {
 	firebase.database().ref(`/users/${currentUser.uid}/places/${uid}`)
-		.set({ name, rating, international_phone_number, opening_hours })
+		.set({ name, rating, international_phone_number, opening_hour, website })
 		.then(() => {
 			dispatch({ type: SAVE_PLACE_SUCCESS });			
 		});

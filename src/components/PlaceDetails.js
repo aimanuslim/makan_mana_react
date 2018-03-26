@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import _ from 'lodash';
 
 import { placeUpdate } from '../actions';
 import { CardSection, Input } from './common';
 
 class PlaceDetails extends Component {
+
+	componentWillMount() {
+    _.each(this.props.place, (value, prop) => {
+      this.props.placeUpdate({ prop, value });
+	    });
+	 }
 
 	getOpeningHours(opening_hours) {
 		const today = new Date();
@@ -21,6 +28,7 @@ class PlaceDetails extends Component {
 	render() {
 		const place = this.props.place;
 		const { opening_hours } = place;
+		console.warn(this.props);
 		return (
 		<View>
 			<CardSection style={styles.sectionStyle}>
@@ -31,34 +39,39 @@ class PlaceDetails extends Component {
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
-				<Text style={styles.labelTextStyle}>Rating</Text>
-				<View style={{flex: 1}}>
-				<Text style={styles.valueTextStyle}>{place.rating}</Text>
-				</View>
+				<Input
+					label="Rating"
+					value={this.props.rating.toString()}
+					onChangeText={value => this.props.placeUpdate({ prop: 'rating', value })}
+				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
-				<Text style={styles.labelTextStyle}>Pricing</Text>
-				<View style={{flex: 1}}>
-				<Text style={styles.valueTextStyle}>{place.price_level}</Text>
-				</View>
+				<Input
+					label="Price Level"
+					value={this.props.price_level}
+					onChangeText={value => this.props.placeUpdate({ prop: 'price_level', value })}
+				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
-				<Text style={styles.labelTextStyle}>Phone</Text>
-				<View style={{flex: 1}}>
-				<Text style={styles.valueTextStyle}>{place.international_phone_number}</Text>
-				</View>
+				<Input
+					label="International Phone Number"
+					value={this.props.international_phone_number}
+					onChangeText={value => this.props.placeUpdate({ prop: 'international_phone_number', value })}
+				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
-				<Text style={styles.labelTextStyle}>Open Period</Text>
-				<View style={{flex: 1}}>
-				<Text style={styles.valueTextStyle}>{this.getOpeningHours(opening_hours)}</Text>
-				</View>
+				<Input
+					label="Opening Hours"
+					value={'dummy'}
+					onChangeText={value => this.props.placeUpdate({ prop: 'opening_hours', value })}
+				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
-				<Text style={styles.labelTextStyle}>Website</Text>
-				<View style={{flex: 1}}>
-				<Text style={styles.valueTextStyle}>{place.website}</Text>
-				</View>
+				<Input
+					label="Website"
+					value={this.props.website}
+					onChangeText={value => this.props.placeUpdate({ prop: 'website', value })}
+				/>
 			</CardSection>
 
 		</View>
@@ -93,9 +106,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { name } = state.placeDetails;
-
-  return { name };
+  const { name, rating, price_level, international_phone_number, opening_hours, website } = state.placeDetails;
+  return { name, rating, price_level, international_phone_number, opening_hours, website };
 };
 
 export default connect(mapStateToProps, { placeUpdate })(PlaceDetails);
