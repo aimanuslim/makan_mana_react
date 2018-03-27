@@ -48,7 +48,7 @@ const RouterComponent = () => {
 					onRight={() => Actions.addPlace()}
 					rightTitle="Add"
 					key="viewFavorites"
-					title="Favorites"
+					title="Favoritesfdsf"
 					component={FavoriteScreen}	 
 				/>
 			</Scene>

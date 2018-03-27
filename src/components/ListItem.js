@@ -7,7 +7,7 @@ import { Card, CardSection } from './common';
 class ListItem extends Component {
 
 	onRowPress() {
-		console.warn("Pressed")
+		console.log("Pressed")
     	Actions.editPlaceDetails({ place: this.props.place, random: false });
   	}
 	render() {
@@ -15,8 +15,10 @@ class ListItem extends Component {
 		return (
 			
 				
-					<View>
+				
+						<View>
 					<SwipeRow
+					
 					leftOpenValue={75}
 					rightOpenValue={-75}
 					left={
@@ -25,13 +27,16 @@ class ListItem extends Component {
 						</Button>
 					}
 					body={
-						<TouchableWithoutFeedback 
+							<TouchableWithoutFeedback 
 							onPress={this.onRowPress.bind(this)}
 						>
-						<View>
+						<View style={{ flex: 1 }}>
 							<Text style={styles.placeTextStyle}>{name}</Text>
 						</View>
-						</TouchableWithoutFeedback>
+
+							</TouchableWithoutFeedback>
+						
+						
 					}
 					right={
 						<Button danger onPress={() => alert('Trash')}>
@@ -40,6 +45,7 @@ class ListItem extends Component {
 					}
 					/>
 					</View>
+					
 				
 			
 			);
@@ -50,7 +56,7 @@ const styles = {
 	placeTextStyle: {
 		fontSize: 18, 
 		paddingLeft: 15,
-		textAlign: 'center'
+		textAlign: 'left'
 	}
 };
 

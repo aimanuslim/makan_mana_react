@@ -7,7 +7,7 @@ import {
 const INITIAL_STATE = {
 	name: '',
 	rating: '',
-	price_level: '',
+	formatted_address: '',
 	international_phone_number: '',
 	opening_hours: [],
 	website: ''

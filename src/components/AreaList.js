@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 import ListItem from './ListItem';
 
-class AreaList extends Component {
+class AreaList extends React.PureComponent {
 	componentWillMount(){
 		this.props.fetchPlaces();
 	}
@@ -16,7 +16,6 @@ class AreaList extends Component {
 
 	render() {
 		return (
-			<View>
 			<FlatList
 				data={this.props.places}
 				extraData={this.props.places}
@@ -28,7 +27,6 @@ class AreaList extends Component {
 					}
 				}
 			/>
-			</View>
 			);
 	}
 }

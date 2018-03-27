@@ -47,9 +47,9 @@ class PlaceDetails extends Component {
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
-					label="Price Level"
-					value={this.props.price_level}
-					onChangeText={value => this.props.placeUpdate({ prop: 'price_level', value })}
+					label="Address"
+					value={this.props.formatted_address}
+					onChangeText={value => this.props.placeUpdate({ prop: 'formatted_address', value })}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
@@ -106,8 +106,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { name, rating, price_level, international_phone_number, opening_hours, website } = state.placeDetails;
-  return { name, rating, price_level, international_phone_number, opening_hours, website };
+  const { name, rating, formatted_address, international_phone_number, opening_hours, website } = state.placeDetails;
+  return { name, rating, formatted_address, international_phone_number, opening_hours, website };
 };
 
 export default connect(mapStateToProps, { placeUpdate })(PlaceDetails);

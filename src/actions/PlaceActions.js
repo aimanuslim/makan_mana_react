@@ -17,13 +17,21 @@ export const placeUpdate = ({ prop, value }) => {
 };
 
 
-export const addPlace = ({ name, rating, international_phone_number, opening_hours, website })  => {
+export const addPlace = ({ name, formatted_address, rating, international_phone_number, opening_hours, website })  => {
 	const { currentUser } = firebase.auth();
+
+	if(!international_phone_number) {
+		international_phone_number = "Unavailable";
+	}
+
+	if(!website) {
+		website = "Unavailable";
+	}
 
 
 	return (dispatch) => {
 		firebase.database().ref(`/users/${currentUser.uid}/places`)
-		.push({ name, rating, international_phone_number, opening_hours, website})
+		.push({ name, formatted_address, rating, international_phone_number, opening_hours, website })
 		.then(() => {
 			dispatch({ type: ADD_PLACE });
 		});
