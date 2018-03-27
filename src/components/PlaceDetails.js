@@ -28,7 +28,7 @@ class PlaceDetails extends Component {
 	render() {
 		const place = this.props.place;
 		const { opening_hours } = place;
-		console.warn(this.props);
+		console.log(this.props);
 		return (
 		<View>
 			<CardSection style={styles.sectionStyle}>

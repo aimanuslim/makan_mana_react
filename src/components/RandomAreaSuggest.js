@@ -73,7 +73,7 @@ class RandomAreaSuggest extends Component {
 		// console.log(this.props.suggestionsList);
 		// console.log('index is ' + randomIndex);
 		// console.log(this.props.suggestionsList[randomIndex]);
-		Actions.viewPlaceDetails({ place: this.props.suggestionsList[randomIndex], random: true });
+		Actions.editPlaceDetails({ place: this.props.suggestionsList[randomIndex], random: true });
 	}
 
 	render() {
@@ -146,6 +146,7 @@ const mapStateToProps = ({ googleAPI }) => {
 		detectLocationFailed, 
 		suggestionsList,
 	} = googleAPI;
+	// console.log(suggestionsList);
 	return { autoCompleteList, autoCompLoading, findingSuggestion, queryEntered, currentQuery, detectLocationFailed, suggestionsList };
 };
 

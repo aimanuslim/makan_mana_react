@@ -14,7 +14,7 @@ class FavoriteScreen extends Component {
 						keyboardShouldPersistTaps='handled'
 			>
 						<ScrollView>
-							<AreaList style={{ flex: 1 }} data={{}} />
+							<AreaList style={{ flex: 1 }} />
 						</ScrollView>
 			</KeyboardAwareScrollView>
 			<CardSection>

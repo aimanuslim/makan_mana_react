@@ -15,15 +15,21 @@ class AreaList extends React.PureComponent {
 
 
 	render() {
+		let list  = this.props.places;
+		if(this.props.data){
+			list = this.props.data;
+		}
+		// console.log(this.props.data)
 		return (
+			
 			<FlatList
-				data={this.props.places}
-				extraData={this.props.places}
+				data={list}
+				extraData={list}
 				renderItem={(place) => (
 					<ListItem place={place.item} />
 				)}
 				keyExtractor={(place) => {
-					return place.pid;
+					return place.place_id;
 					}
 				}
 			/>
@@ -38,8 +44,11 @@ const mapStateToProps = ({ place }) => {
 	// console.log(data);
 
 	const places = _.map(data, (val, pid) => {
-		return {...val, pid};
+		return { ...val, place_id: pid };
 	});
+	// if (this.props.data) {
+	// 	places.concat(this.props.data);
+	// }
 	// console.log(places);	
 	return { places };
 };
