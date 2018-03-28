@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Root } from 'native-base';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -23,10 +24,11 @@ class App extends Component {
 	render() {
 		const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 		return (
+			<Root>
 			<Provider store={store}>
 				<Router />
 			</Provider>
-
+			</Root>
 			);
 	}
 }

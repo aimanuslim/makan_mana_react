@@ -26,36 +26,52 @@ class PlaceDetails extends Component {
 	}
 
 	render() {
+		var placeDetails = { ...this.props };
+		var x;
+
 		const place = this.props.place;
 		const { opening_hours } = place;
+		console.log("Before");
 		console.log(this.props);
+		
+		for(x in placeDetails){
+			placeDetails[x] = placeDetails[x] ? placeDetails[x] : 'Unavailable';
+		}	
+		console.log("After");
+		console.log(this.props);
+
+		console.log("placeDetails");
+		console.log(placeDetails);
+
+
+
 		return (
 		<View>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Name"
-					value={this.props.name}
+					value={placeDetails.name}
 					onChangeText={value => this.props.placeUpdate({ prop: 'name', value })}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Rating"
-					value={this.props.rating.toString()}
+					value={placeDetails.rating.toString()}
 					onChangeText={value => this.props.placeUpdate({ prop: 'rating', value })}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Address"
-					value={this.props.formatted_address}
+					value={placeDetails.formatted_address}
 					onChangeText={value => this.props.placeUpdate({ prop: 'formatted_address', value })}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="International Phone Number"
-					value={this.props.international_phone_number}
+					value={placeDetails.international_phone_number}
 					onChangeText={value => this.props.placeUpdate({ prop: 'international_phone_number', value })}
 				/>
 			</CardSection>
@@ -69,7 +85,7 @@ class PlaceDetails extends Component {
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Website"
-					value={this.props.website}
+					value={placeDetails.website}
 					onChangeText={value => this.props.placeUpdate({ prop: 'website', value })}
 				/>
 			</CardSection>

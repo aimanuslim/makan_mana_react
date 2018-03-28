@@ -12,14 +12,13 @@ class AreaList extends React.PureComponent {
 		this.props.fetchPlaces();
 	}
 
-
+	
 
 	render() {
 		let list  = this.props.places;
 		if(this.props.data){
 			list = this.props.data;
 		}
-		// console.log(this.props.data)
 		return (
 			
 			<FlatList

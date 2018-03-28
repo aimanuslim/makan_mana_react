@@ -105,19 +105,7 @@ function getPlaceDetailsListFromName(dispatch, areaName) {
 			const promises = results.map(placeInfo => {
 				return fetchAreaDetails(placeInfo.place_id)
 				.then(placeDetails => {
-					console.log(placeDetails);
 					const { name, formatted_address, rating, international_phone_number, geometry, opening_hours, website,  place_id  } = placeDetails;
-					// if(!rating){
-					// 	rating = "Unavailable"
-					// }
-
-					// if(!international_phone_number){
-					// 	international_phone_number = "Unavailable"
-					// }
-
-					// if(!website){
-					// 	website = "Unavailable"
-					// }
 					
 					return { name, formatted_address, rating, international_phone_number, geometry, opening_hours, website,  place_id };
 				})

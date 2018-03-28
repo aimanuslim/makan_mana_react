@@ -1,11 +1,12 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
-
+import { Toast } from 'native-base';
 import {
 	ADD_PLACE,
 	PLACES_FETCH_SUCCESS,
 	SAVE_PLACE_SUCCESS,
-	PLACE_UPDATE 
+	PLACE_UPDATE,
+	NOTIFY_DONE,
 } from './types';
 
 
@@ -20,20 +21,17 @@ export const placeUpdate = ({ prop, value }) => {
 export const addPlace = ({ name, formatted_address, rating, international_phone_number, opening_hours, website })  => {
 	const { currentUser } = firebase.auth();
 
-	if(!international_phone_number) {
-		international_phone_number = "Unavailable";
-	}
-
-	if(!website) {
-		website = "Unavailable";
-	}
-
 
 	return (dispatch) => {
 		firebase.database().ref(`/users/${currentUser.uid}/places`)
 		.push({ name, formatted_address, rating, international_phone_number, opening_hours, website })
 		.then(() => {
 			dispatch({ type: ADD_PLACE });
+			Toast.show({
+	          text: 'Place saved!',
+	          position: 'bottom',
+	          buttonText: 'Okay'
+	        });
 		});
 	};
 
@@ -62,4 +60,10 @@ export const savePlaces = ({ name, rating, international_phone_number, opening_h
 		});
 	};
 
+};
+
+export const closeNotification = () => {
+	return {
+		type: NOTIFY_DONE
+	}
 };

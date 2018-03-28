@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Modal } from 'react-native';
 import { connect } from 'react-redux';
+import { Toast } from 'native-base';
 
 
 import { CardSection, Spinner, Button } from './common/index';
 import PlaceDetails from './PlaceDetails'; 
 import AutoSuggestInput from './AutoSuggestInput';
-import { getSinglePlaceDetailsByName, addPlace } from '../actions';
+import { getSinglePlaceDetailsByName, addPlace, closeNotification } from '../actions';
 
 class PlaceAdd extends Component {
+
+
 
 	getOpeningHours(opening_hours) {
 		const today = new Date();
 		if (opening_hours) {
 			const { weekday_text } = opening_hours;
-		 	return weekday_text[today.getDay()];
+			return weekday_text[today.getDay()];
 		} else {
 			return null;
 		}
@@ -22,7 +25,14 @@ class PlaceAdd extends Component {
 
 	onAddPlace = () => {
 		// console.warn(this.props.newPlace)
-		this.props.addPlace(this.props.newPlace);
+		var newPlaceEdited = { ...this.props.newPlace }
+		var x;
+		for (x in newPlaceEdited) {
+			newPlaceEdited[x] = newPlaceEdited[x] ? newPlaceEdited[x] : 'Unavailable';
+		}
+		// TODO: need to fix the undefined issue
+		this.props.addPlace(newPlaceEdited);
+		
 	}
 
 	renderPlaceDetails() {
@@ -41,8 +51,7 @@ class PlaceAdd extends Component {
 			<View>
 				<PlaceDetails place={this.props.newPlace} />
 				<CardSection>
-					<Button style={{ flex: 1 }} onPress={this.onAddPlace.bind(this)}
-					>
+					<Button style={{ flex: 1 }} onPress={this.onAddPlace.bind(this)}>
 						Add Place
 					</Button>
 				</CardSection>
@@ -57,9 +66,7 @@ class PlaceAdd extends Component {
 				<AutoSuggestInput
 					onSelect={this.props.getSinglePlaceDetailsByName}
 				/>
-
 				{this.renderPlaceDetails()}
-
 			</View>
 			
 			);
@@ -67,11 +74,13 @@ class PlaceAdd extends Component {
 } 
 
 
-export const mapStateToProps = ({ googleAPI }) => {
+export const mapStateToProps = ({ googleAPI, placeDetails }) => {
 	const { newPlace, findingNewPlace, newPlaceFound } = googleAPI;
-	console.log(newPlace)
-	return { newPlace, findingNewPlace, newPlaceFound };
+	const { isSuccess } = placeDetails;
+	console.log(isSuccess);
+	return { newPlace, findingNewPlace, newPlaceFound, isSuccess };
 };
+
 
 const styles = {
 	sectionStyle: {
@@ -107,8 +116,24 @@ const styles = {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+
+	cardSectionStyle: {
+		justifyContent: 'center'
+	},
+	textStyle: {
+		flex: 1,
+		fontSize: 18,
+		textAlign: 'center',
+		lineHeight: 40
+	},
+	containerStyle: {
+		backgroundColor: 'rgba(0, 0, 0, 0.75)',
+		position: 'relative',
+		width: 15,
+		justifyContent: 'center'
 	}
 
 };
 
-export default connect(mapStateToProps, { getSinglePlaceDetailsByName, addPlace })(PlaceAdd);
+export default connect(mapStateToProps, { getSinglePlaceDetailsByName, addPlace, closeNotification })(PlaceAdd);
