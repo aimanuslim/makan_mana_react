@@ -8,7 +8,7 @@ class ListItem extends Component {
 
 	onRowPress() {
 		console.log("Pressed")
-    	Actions.editPlaceDetails({ place: this.props.place, random: false });
+    	Actions.updatePlaceDetails({ place: this.props.place, random: false });
   	}
 	render() {
 		const { name } = this.props.place;

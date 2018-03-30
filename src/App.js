@@ -8,6 +8,8 @@ import firebase from 'firebase';
 import reducers from './reducers';
 import Router from './Router';
 
+console.disableYellowBox = true;
+
 class App extends Component {
 	componentWillMount() {
 		const config = {
@@ -32,5 +34,6 @@ class App extends Component {
 			);
 	}
 }
+
 
 export default App;

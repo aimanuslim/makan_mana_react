@@ -3,8 +3,9 @@ import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Actions } from 'react-native-router-flux';
+import { fetchPlaces } from '../actions';
 
-import { Button, CardSection } from './common';
+import { Button, CardSection, Spinner } from './common';
 import AreaList from './AreaList';
 
 
@@ -16,12 +17,23 @@ function getRandomIndex(min, max) {
 class FavoriteScreen extends Component {
 	onChooseForMePressed(placesCount) {
 		const randomIndex = getRandomIndex(0, placesCount);
-		Actions.editPlaceDetails({ place: this.props.places[randomIndex], random: true });
+		Actions.updatePlaceDetails({ place: this.props.places[randomIndex], random: true });
 	}
 
-	render() {
+	componentWillMount(){
+		this.props.fetchPlaces()
+	}
+
+	renderFavoritesList() {
+		if(!this.props.doneFetching){
+			return (
+				<View style={styles.spinnerContainerStyle}>
+					<Spinner style={styles.spinnerStyle} />
+				</View>
+				);
+		}
+
 		return (
-			<View style={{ flex:1 }}>
 			<KeyboardAwareScrollView
 						keyboardShouldPersistTaps='handled'
 			>
@@ -29,6 +41,14 @@ class FavoriteScreen extends Component {
 							<AreaList style={{ flex: 1 }} />
 						</ScrollView>
 			</KeyboardAwareScrollView>
+
+			)
+	}
+
+	render() {
+		return (
+			<View style={{ flex:1 }}>
+			{this.renderFavoritesList()}
 			<CardSection>
 				<Button onPress={() => this.onChooseForMePressed(this.props.places.length)}>Choose for me</Button>		
 			</CardSection>
@@ -39,11 +59,26 @@ class FavoriteScreen extends Component {
 
 
 const mapStateToProps = ({ place }) => {
-	const { data } = place;
+	const { data, doneFetching } = place;
 	const places = _.map(data, (val, pid) => {
 		return { ...val, place_id: pid };
 	});
-	return { places };
+	return { places, doneFetching };
 };
 
-export default connect(mapStateToProps, {})(FavoriteScreen);
+
+const styles = {
+	spinnerStyle: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+
+	spinnerContainerStyle: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	}
+}
+
+export default connect(mapStateToProps, { fetchPlaces })(FavoriteScreen);

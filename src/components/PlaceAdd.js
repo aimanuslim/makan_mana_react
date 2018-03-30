@@ -25,13 +25,13 @@ class PlaceAdd extends Component {
 
 	onAddPlace = () => {
 		// console.warn(this.props.newPlace)
-		var newPlaceEdited = { ...this.props.newPlace }
-		var x;
-		for (x in newPlaceEdited) {
-			newPlaceEdited[x] = newPlaceEdited[x] ? newPlaceEdited[x] : 'Unavailable';
-		}
+		// var newPlaceEdited = { ...this.props.newPlace }
+		// var x;
+		// for (x in newPlaceEdited) {
+		// 	newPlaceEdited[x] = newPlaceEdited[x] ? newPlaceEdited[x] : 'Unavailable';
+		// }
 		// TODO: need to fix the undefined issue
-		this.props.addPlace(newPlaceEdited);
+		this.props.addPlace(this.props.placeDetails);
 		
 	}
 
@@ -76,9 +76,8 @@ class PlaceAdd extends Component {
 
 export const mapStateToProps = ({ googleAPI, placeDetails }) => {
 	const { newPlace, findingNewPlace, newPlaceFound } = googleAPI;
-	const { isSuccess } = placeDetails;
-	console.log(isSuccess);
-	return { newPlace, findingNewPlace, newPlaceFound, isSuccess };
+	
+	return { newPlace, findingNewPlace, newPlaceFound, placeDetails };
 };
 
 
@@ -135,5 +134,6 @@ const styles = {
 	}
 
 };
+
 
 export default connect(mapStateToProps, { getSinglePlaceDetailsByName, addPlace, closeNotification })(PlaceAdd);

@@ -8,12 +8,23 @@ import { placeUpdate } from '../actions';
 import { CardSection, Input } from './common';
 
 class PlaceDetails extends Component {
+	state = {
+		usePlaceProps: false
+	}
+
 
 	componentWillMount() {
-    _.each(this.props.place, (value, prop) => {
-      this.props.placeUpdate({ prop, value });
+    	_.each(this.props.place, (value, prop) => {
+      		this.props.placeUpdate({ prop, value });
 	    });
-	 }
+	    if(this.props.place){
+	    	console.log("Use place props set to true")
+	    	this.setState({usePlaceProps: true})
+
+	    } else {
+	    	this.setState({usePlaceProps: false})
+	    } 
+	}
 
 	getOpeningHours(opening_hours) {
 		const today = new Date();
@@ -25,24 +36,28 @@ class PlaceDetails extends Component {
 		}
 	}
 
+	getStringForValue(value){
+		if(!value){
+			return "Unavalailable";
+		} 
+
+		if(typeof value !== 'string'){
+			return value.toString()
+		}
+
+		return value
+	}
+
 	render() {
-		var placeDetails = { ...this.props };
 		var x;
-
-		const place = this.props.place;
-		const { opening_hours } = place;
-		console.log("Before");
-		console.log(this.props);
-		
-		for(x in placeDetails){
-			placeDetails[x] = placeDetails[x] ? placeDetails[x] : 'Unavailable';
-		}	
-		console.log("After");
-		console.log(this.props);
-
-		console.log("placeDetails");
-		console.log(placeDetails);
-
+		var placeDetails;
+		if(this.state.usePlaceProps == true){
+			console.log("Setting place details to the place props")
+			console.log(this.props.place)
+			placeDetails = { ...this.props.place }
+		} else {
+			placeDetails = { ...this.props }
+		}
 
 
 		return (
@@ -50,43 +65,58 @@ class PlaceDetails extends Component {
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Name"
-					value={placeDetails.name}
-					onChangeText={value => this.props.placeUpdate({ prop: 'name', value })}
+					value={this.getStringForValue(placeDetails.name)}
+					onChangeText={value => { 
+						this.setState({usePlaceProps: false})
+						this.props.placeUpdate({ prop: 'name', value })}
+					}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Rating"
-					value={placeDetails.rating.toString()}
-					onChangeText={value => this.props.placeUpdate({ prop: 'rating', value })}
+					value={this.getStringForValue(placeDetails.rating)}
+					onChangeText={value => { 
+						this.setState({usePlaceProps: false})
+						this.props.placeUpdate({ prop: 'rating', value })}
+					}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Address"
-					value={placeDetails.formatted_address}
-					onChangeText={value => this.props.placeUpdate({ prop: 'formatted_address', value })}
+					value={this.getStringForValue(placeDetails.formatted_address)}
+					onChangeText={value => { 
+						this.setState({usePlaceProps: false})
+						this.props.placeUpdate({ prop: 'formatted_address', value })}
+					}
+					
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="International Phone Number"
-					value={placeDetails.international_phone_number}
-					onChangeText={value => this.props.placeUpdate({ prop: 'international_phone_number', value })}
+					value={this.getStringForValue(placeDetails.international_phone_number)}
+					onChangeText={value => { 
+						this.setState({usePlaceProps: false})
+						this.props.placeUpdate({ prop: 'international_phone_number', value })}
+					}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Opening Hours"
-					value={'dummy'}
-					onChangeText={value => this.props.placeUpdate({ prop: 'opening_hours', value })}
+					value={this.getOpeningHours(placeDetails.opening_hours)}
 				/>
 			</CardSection>
 			<CardSection style={styles.sectionStyle}>
 				<Input
 					label="Website"
-					value={placeDetails.website}
-					onChangeText={value => this.props.placeUpdate({ prop: 'website', value })}
+					value={this.getStringForValue(placeDetails.website)}
+					onChangeText={value => { 
+						this.setState({usePlaceProps: false})
+						this.props.placeUpdate({ prop: 'website', value })}
+					}
 				/>
 			</CardSection>
 

@@ -21,10 +21,16 @@ export const placeUpdate = ({ prop, value }) => {
 export const addPlace = ({ name, formatted_address, rating, international_phone_number, opening_hours, website })  => {
 	const { currentUser } = firebase.auth();
 
+	var place = { name, formatted_address, rating, international_phone_number, opening_hours, website }
+	var x;
+	for(x in place){
+		place[x] = place[x] ? place[x] : "Unavailable";
+	}
+	console.log(place)
 
 	return (dispatch) => {
 		firebase.database().ref(`/users/${currentUser.uid}/places`)
-		.push({ name, formatted_address, rating, international_phone_number, opening_hours, website })
+		.push(place)
 		.then(() => {
 			dispatch({ type: ADD_PLACE });
 			Toast.show({

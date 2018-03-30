@@ -9,7 +9,7 @@ import ListItem from './ListItem';
 
 class AreaList extends React.PureComponent {
 	componentWillMount(){
-		this.props.fetchPlaces();
+		
 	}
 
 	

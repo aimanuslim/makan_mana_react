@@ -33,10 +33,11 @@ const RouterComponent = () => {
 				/>
 
 				<Scene 
-					key="editPlaceDetails"
-					title="Place Details"					
+					key="updatePlaceDetails"
+					title="Edit Place"					
 					component={PlaceDetails}
 				/>
+
 
 				<Scene 
 					key="addPlace"
