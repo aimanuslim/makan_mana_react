@@ -6,6 +6,7 @@ import PlaceDetails from './components/PlaceDetails';
 import FavoriteScreen from './components/FavoriteScreen';
 import PlaceAdd from './components/PlaceAdd';
 import LoginForm from './components/LoginForm';
+import PlaceSave from './components/PlaceSave';
 
 
 const RouterComponent = () => {
@@ -43,6 +44,12 @@ const RouterComponent = () => {
 					key="addPlace"
 					title="New Place"
 					component={PlaceAdd}
+				/>
+
+				<Scene 
+					key="savePlace"
+					title="Save This Place"
+					component={PlaceSave}
 				/>
 
 				<Scene

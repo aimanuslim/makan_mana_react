@@ -76,7 +76,8 @@ class RandomAreaSuggest extends Component {
 
 		// TODO pass title into this 
 		// TODO create new screen for saving the place for this screen
-		Actions.updatePlaceDetails({ place: this.props.suggestionsList[randomIndex], random: true });
+		// Actions.updatePlaceDetails({ title: this.props.suggestionsList[randomIndex].name, place: this.props.suggestionsList[randomIndex], random: true });
+		Actions.savePlace({ title: this.props.suggestionsList[randomIndex].name, place: this.props.suggestionsList[randomIndex]});
 	}
 
 	render() {

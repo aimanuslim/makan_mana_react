@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Modal } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { Toast } from 'native-base';
 
 
 import { CardSection, Spinner, Button } from './common/index';

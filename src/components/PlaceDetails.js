@@ -28,7 +28,9 @@ class PlaceDetails extends Component {
 
 	getOpeningHours(opening_hours) {
 		const today = new Date();
-		if (opening_hours) {
+		console.log("opening_hours")
+		console.log(opening_hours)
+		if (opening_hours && opening_hours !== "Unavailable") {
 			const { weekday_text } = opening_hours;
 		 	return weekday_text[today.getDay()];
 		} else {
@@ -38,7 +40,7 @@ class PlaceDetails extends Component {
 
 	getStringForValue(value){
 		if(!value){
-			return "Unavalailable";
+			return "Unavailable";
 		} 
 
 		if(typeof value !== 'string'){
