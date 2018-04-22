@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
+
+import { Form, Item, Input, Label } from 'native-base';
+
 import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
 import { placeUpdate } from '../actions';
-import { CardSection, Input } from './common';
+import { CardSection } from './common';
 
 class PlaceDetails extends Component {
 	state = {
@@ -63,66 +66,62 @@ class PlaceDetails extends Component {
 
 
 		return (
-		<View>
-			<CardSection style={styles.sectionStyle}>
+		<Form>
+			<Item stackedLabel>
+				<Label>Name</Label>
 				<Input
-					label="Name"
 					value={this.getStringForValue(placeDetails.name)}
 					onChangeText={value => { 
 						this.setState({usePlaceProps: false})
 						this.props.placeUpdate({ prop: 'name', value })}
 					}
-				/>
-			</CardSection>
-			<CardSection style={styles.sectionStyle}>
+					/>
+			</Item>
+			<Item stackedLabel>
+				<Label>Rating</Label>
 				<Input
-					label="Rating"
 					value={this.getStringForValue(placeDetails.rating)}
 					onChangeText={value => { 
 						this.setState({usePlaceProps: false})
 						this.props.placeUpdate({ prop: 'rating', value })}
 					}
-				/>
-			</CardSection>
-			<CardSection style={styles.sectionStyle}>
+					/>
+			</Item>
+			<Item stackedLabel>
+				<Label>Address</Label>
 				<Input
-					label="Address"
 					value={this.getStringForValue(placeDetails.formatted_address)}
 					onChangeText={value => { 
 						this.setState({usePlaceProps: false})
 						this.props.placeUpdate({ prop: 'formatted_address', value })}
 					}
-					
-				/>
-			</CardSection>
-			<CardSection style={styles.sectionStyle}>
-				<Input
-					label="International Phone Number"
+					/>
+			</Item>
+			
+			<Item stackedLabel>
+				<Label>International Phone Number</Label>
+				<Input 
 					value={this.getStringForValue(placeDetails.international_phone_number)}
 					onChangeText={value => { 
 						this.setState({usePlaceProps: false})
 						this.props.placeUpdate({ prop: 'international_phone_number', value })}
 					}
 				/>
-			</CardSection>
-			<CardSection style={styles.sectionStyle}>
+			</Item>
+			<Item stackedLabel>
+				<Label>Website</Label>
 				<Input
-					label="Opening Hours"
-					value={this.getOpeningHours(placeDetails.opening_hours)}
-				/>
-			</CardSection>
-			<CardSection style={styles.sectionStyle}>
-				<Input
-					label="Website"
 					value={this.getStringForValue(placeDetails.website)}
 					onChangeText={value => { 
 						this.setState({usePlaceProps: false})
 						this.props.placeUpdate({ prop: 'website', value })}
 					}
-				/>
-			</CardSection>
+					/>
+			</Item>
 
-		</View>
+		</Form>
+
+		
 		);
 	}
 }
