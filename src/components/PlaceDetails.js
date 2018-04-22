@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
-
+import { View, Text, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Form, Item, Input, Label } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
@@ -66,6 +66,10 @@ class PlaceDetails extends Component {
 
 
 		return (
+			<KeyboardAwareScrollView
+						keyboardShouldPersistTaps='handled'
+			>
+						<ScrollView>
 		<Form>
 			<Item stackedLabel>
 				<Label>Name</Label>
@@ -120,6 +124,8 @@ class PlaceDetails extends Component {
 			</Item>
 
 		</Form>
+		</ScrollView>
+		</KeyboardAwareScrollView>
 
 		
 		);
