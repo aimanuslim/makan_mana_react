@@ -11,7 +11,7 @@ import PlaceSave from './components/PlaceSave';
 
 const RouterComponent = () => {
 	return (
-		<Router>
+		<Router getSceneStyle={() => ({ backgroundColor: '#7A6174' })}>
 			<Scene key="root">
 
 				<Scene 
@@ -64,6 +64,8 @@ const RouterComponent = () => {
 
 		);
 };
+
+
 
 
 export default RouterComponent;

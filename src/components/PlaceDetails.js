@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Form, Item, Input, Label } from 'native-base';
+import { Form, Item, Input, Label, Picker } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
@@ -29,6 +29,7 @@ class PlaceDetails extends Component {
 	    } 
 	}
 
+
 	getOpeningHours(opening_hours) {
 		const today = new Date();
 		console.log("opening_hours")
@@ -53,6 +54,31 @@ class PlaceDetails extends Component {
 		return value
 	}
 
+	getPickerValue(day_index) {
+		if(day_index == 0) {
+			return 'sun'
+		}
+		if(day_index == 1) {
+			return 'mon'
+		}
+		if(day_index == 2) {
+			return 'tue'
+		}
+		if(day_index == 3) {
+			return 'wed'
+		}
+		if(day_index == 4) {
+			return 'thu'
+		}
+		if(day_index == 5) {
+			return 'fri'
+		}
+		if(day_index == 5) {
+			return 'sun'
+		}
+		return 'non';
+	}
+
 	render() {
 		var x;
 		var placeDetails;
@@ -64,7 +90,7 @@ class PlaceDetails extends Component {
 			placeDetails = { ...this.props }
 		}
 
-
+		const today = new Date();
 		return (
 			<KeyboardAwareScrollView
 						keyboardShouldPersistTaps='handled'
@@ -101,6 +127,13 @@ class PlaceDetails extends Component {
 					}
 					/>
 			</Item>
+
+ 			<Item stackedLabel>
+				<Label>Opening Hours</Label>
+				<Input
+					value={this.getStringForValue(this.getOpeningHours(placeDetails.opening_hours))}
+					/>
+			</Item>
 			
 			<Item stackedLabel>
 				<Label>International Phone Number</Label>
@@ -131,6 +164,8 @@ class PlaceDetails extends Component {
 		);
 	}
 }
+
+const day_values = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 
 const styles = {
 	sectionStyle: {
