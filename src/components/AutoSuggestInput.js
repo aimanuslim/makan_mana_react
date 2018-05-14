@@ -65,7 +65,8 @@ const styles = {
 
 	queryFontStyle: {
 		fontSize: 20,
-		padding: 20
+		padding: 20,
+		borderWidth: 0
 	},
 };
 

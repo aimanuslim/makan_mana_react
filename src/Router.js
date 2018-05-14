@@ -12,7 +12,10 @@ import PlaceSave from './components/PlaceSave';
 const RouterComponent = () => {
 	return (
 		<Router getSceneStyle={() => ({ backgroundColor: '#7A6174' })}>
-			<Scene key="root">
+			<Scene 
+				navigationBarStyle={styles.navigationBarStyle}
+				key="root"
+				>
 
 				<Scene 
 					key="login" 
@@ -21,7 +24,7 @@ const RouterComponent = () => {
 					initial
 				/>
 
-				<Scene 
+				<Scene
 					key="main" 
 					component={SelectMode}
 					title="Makan Mana?"
@@ -34,6 +37,7 @@ const RouterComponent = () => {
 				/>
 
 				<Scene 
+
 					key="updatePlaceDetails"
 					title="Edit Place"					
 					component={PlaceDetails}
@@ -65,6 +69,12 @@ const RouterComponent = () => {
 		);
 };
 
+
+const styles = {
+	navigationBarStyle: {
+		backgroundColor: 'transparent'
+	}
+}
 
 
 
